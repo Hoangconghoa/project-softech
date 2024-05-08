@@ -1,7 +1,6 @@
 import { create } from "zustand";
-import { axiosClient } from "../library/AxiosClient";
+import { axiosClient } from "../librarys/axiosClient";
 import { persist, createJSONStorage } from "zustand/middleware";
-
 interface User {
   _id: string;
   email: string;
@@ -12,8 +11,7 @@ interface User {
   photo: string;
   address: string;
 }
-
-interface Auth {
+interface Customer {
   user: User | null;
   setUser: (user: User) => void;
   isLoading: boolean;
@@ -25,14 +23,14 @@ interface Auth {
   logout: () => void;
 }
 
-const useAuth = create(
-  persist<Auth>(
+const useCustomer = create(
+  persist<Customer>(
     (set) => ({
-      user: null, //Lưu thông tin của user sau khi login thành công {id: 1, name: 'john'}
+      user: null,
       setUser: (user: User) => {
         set({ user });
       },
-      isLoading: false, // set trạng thái cho sự kiện login
+      isLoading: false,
       isAuthenticated: false, //trạng thái user đã login chưa
       login: async (email: string, password: string) => {
         try {
@@ -90,5 +88,4 @@ const useAuth = create(
     }
   )
 );
-
-export default useAuth;
+export default useCustomer;

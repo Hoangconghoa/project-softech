@@ -22,7 +22,10 @@ export type TOrderItems = {
   price: number;
   discount: number;
 };
-
+export enum EnumBoolean {
+  Yes = "true",
+  No = "false",
+}
 export type TActionOrder = {
   staff: ObjectId;
   action: string;
@@ -82,3 +85,16 @@ export interface IStaffMethods {
 
 // Create a new Model type that knows about IUserMethods...
 export type StaffModel = Model<IStaff, {}, IStaffMethods>;
+
+export interface ICustomer extends BaseProperties {
+  _id?: string;
+  firstName: string;
+  lastName: string;
+  email?: string;
+  phone: string;
+  address: string;
+  yard: string;
+  district: string;
+  province: string;
+  password?: string;
+}

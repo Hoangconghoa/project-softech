@@ -1,4 +1,4 @@
-import { axiosClient } from "../../library/AxiosClient";
+import { axiosClient } from "../../librarys/AxiosClient";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button, Pagination, Popconfirm, Space, Table, message } from "antd";
 import type { TableProps } from "antd";

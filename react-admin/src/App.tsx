@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import "./App.css";
 
-import LayoutAdmin from "./Component/LayoutAdmin";
+import LayoutAdmin from "./components/LayoutAdmin";
 import ProductsPage from "./page/ProductsPage";
 import DashBoardPage from "./page/DashBoardPage";
 import BrandsPage from "./page/BrandsPage";
