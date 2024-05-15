@@ -1,44 +1,47 @@
 import { create } from "zustand";
 import { axiosClient } from "../librarys/axiosClient";
 import { persist, createJSONStorage } from "zustand/middleware";
+
 interface User {
   _id: string;
   email: string;
   firstName: string;
   lastName: string;
-  phone: string;
+  phoneNumber: string;
+  role: string;
   photo: string;
   address: string;
 }
-interface Customer {
+
+interface Auth {
   user: User | null;
   setUser: (user: User) => void;
   isLoading: boolean;
   isAuthenticated: boolean;
   login: (
-    phone: string,
+    email: string,
     password: string
   ) => Promise<{ isAuthenticated: boolean; error: string }>;
   logout: () => void;
 }
 
-const useCustomer = create(
-  persist<Customer>(
+const useAuth = create(
+  persist<Auth>(
     (set) => ({
-      user: null,
+      user: null, //Lưu thông tin của user sau khi login thành công {id: 1, name: 'john'}
       setUser: (user: User) => {
         set({ user });
       },
-      isLoading: false,
+      isLoading: false, // set trạng thái cho sự kiện login
       isAuthenticated: false, //trạng thái user đã login chưa
-      login: async (phone: string, password: string) => {
+      login: async (email: string, password: string) => {
         try {
           //Khi nhấn nút login thì cập nhật trạng thái loading
           set({ isLoading: true });
 
           //dùng thư viện axiosClient để handle việc check, gửi và lưu token xuống localStorage
-          const response = await axiosClient.post("/v1/customers/login", {
-            phone,
+          const response = await axiosClient.post("/v1/user/login", {
+            email,
             password,
           });
           console.log("useAuth", response);
@@ -46,7 +49,7 @@ const useCustomer = create(
           if (response && response.status === 200) {
             const isAuthenticated = response.status === 200; //==> TRUE
             //Gọi tiếp API lấy thông tin User
-            const { data } = await axiosClient.get("/v1/customers/profile");
+            const { data } = await axiosClient.get("/v1/user/profile");
 
             //cập nhật lại state
             set({ user: data.data, isAuthenticated, isLoading: false });
@@ -87,4 +90,5 @@ const useCustomer = create(
     }
   )
 );
-export default useCustomer;
+
+export default useAuth;
