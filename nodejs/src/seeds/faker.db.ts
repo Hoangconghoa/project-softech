@@ -53,6 +53,7 @@ async function createData() {
       lastName: faker.person.lastName(),
       email: faker.internet.email(),
       phone: rPhone,
+      password: "HoangHoa0801@03",
       address: faker.location.streetAddress(false),
       yard: faker.location.street(),
       district: faker.location.state(),

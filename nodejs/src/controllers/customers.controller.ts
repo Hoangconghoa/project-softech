@@ -37,11 +37,7 @@ const createCustomer = async (
   try {
     const data = req.body;
     const customer = await customersService.createCustomer(data);
-
-    // res.status(201).json({
-    //     message: `Created Customer`,
-    //     customer: customer
-    // })
+    console.log("test ", req.body);
     sendJsonSuccess(res, "Create Customer successfully", 201)(customer);
   } catch (err) {
     next(err);
@@ -77,10 +73,6 @@ const deleteCustomer = async (
   try {
     const { id } = req.params;
     const customer = await customersService.deleteCustomer(id);
-    // res.status(200).json({
-    //     message: `Delete Customer by ID ${id}`,
-    //     customer: customer
-    // })
     sendJsonSuccess(res)(customer);
   } catch (err) {
     next(err);
