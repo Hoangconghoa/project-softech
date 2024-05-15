@@ -6,8 +6,7 @@ interface User {
   email: string;
   firstName: string;
   lastName: string;
-  phoneNumber: string;
-  role: string;
+  phone: string;
   photo: string;
   address: string;
 }
@@ -17,7 +16,7 @@ interface Customer {
   isLoading: boolean;
   isAuthenticated: boolean;
   login: (
-    email: string,
+    phone: string,
     password: string
   ) => Promise<{ isAuthenticated: boolean; error: string }>;
   logout: () => void;
@@ -32,14 +31,14 @@ const useCustomer = create(
       },
       isLoading: false,
       isAuthenticated: false, //trạng thái user đã login chưa
-      login: async (email: string, password: string) => {
+      login: async (phone: string, password: string) => {
         try {
           //Khi nhấn nút login thì cập nhật trạng thái loading
           set({ isLoading: true });
 
           //dùng thư viện axiosClient để handle việc check, gửi và lưu token xuống localStorage
-          const response = await axiosClient.post("/v1/auth/login", {
-            email,
+          const response = await axiosClient.post("/v1/customers/login", {
+            phone,
             password,
           });
           console.log("useAuth", response);
@@ -47,7 +46,7 @@ const useCustomer = create(
           if (response && response.status === 200) {
             const isAuthenticated = response.status === 200; //==> TRUE
             //Gọi tiếp API lấy thông tin User
-            const { data } = await axiosClient.get("/v1/auth/profile");
+            const { data } = await axiosClient.get("/v1/customers/profile");
 
             //cập nhật lại state
             set({ user: data.data, isAuthenticated, isLoading: false });

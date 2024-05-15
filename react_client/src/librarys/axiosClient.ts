@@ -77,9 +77,12 @@ axiosClient.interceptors.response.use(
 
         const refreshToken = window.localStorage.getItem("refreshToken");
         if (refreshToken) {
-          const response = await axiosClient.post("/v1/customers", {
-            refreshToken: refreshToken,
-          });
+          const response = await axiosClient.post(
+            "/v1/customers/refresh-token",
+            {
+              refreshToken: refreshToken,
+            }
+          );
 
           const { token } = response.data.data;
           window.localStorage.setItem("token", token);

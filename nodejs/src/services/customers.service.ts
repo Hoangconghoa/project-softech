@@ -1,6 +1,8 @@
 import createError from "http-errors";
 import Customer from "../models/customers.model";
 import { ICustomer } from "../types/models";
+import globalConfig from "../constants/config";
+import jwt from "jsonwebtoken";
 //Tra lai ket qua
 const getAll = async (query: any) => {
   //Phân trang

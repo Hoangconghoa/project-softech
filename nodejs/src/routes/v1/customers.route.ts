@@ -1,8 +1,9 @@
 import express from "express";
 import customersController from "../../controllers/customers.controller";
+
 import {
-  authenticateToken,
   authorize,
+  authenticateToken,
 } from "../../middlewares/auth.middlewares";
 const router = express.Router();
 
@@ -27,6 +28,7 @@ router.put("/:id", customersController.updateCustomer);
 //Delete category By ID
 ///http://localhost:8080/api/v1/customers/:id
 //Chỉ chó phép role = admin moi xoa dc
+
 router.delete(
   "/:id",
   authenticateToken,
