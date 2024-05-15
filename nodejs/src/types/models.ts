@@ -98,3 +98,22 @@ export interface ICustomer extends BaseProperties {
   province: string;
   password?: string;
 }
+
+//Product
+export interface IProduct extends BaseProperties {
+  productName: string,
+  description?: string,
+  slug: string,
+  price?: number,
+  stock?: number,
+  discount?: number,
+  modelYear?: string,
+  thumbnail?: string,
+  category: ObjectId,
+  isDelete?: boolean,
+  isBest?: boolean,
+  isHot?: boolean,
+  isNew?: boolean,
+  isHome?: boolean,
+}
+export type ProductModelType = Model<IProduct>;
