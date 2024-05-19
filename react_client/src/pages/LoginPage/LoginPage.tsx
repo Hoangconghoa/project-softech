@@ -1,6 +1,7 @@
-import { useNavigate } from "react-router-dom";
-import { Button, Checkbox, Form, type FormProps, Input } from "antd";
+import { useNavigate, Link } from "react-router-dom";
+import { Button, Checkbox, Form, type FormProps, Input, Image } from "antd";
 import useAuth from "../../hooks/useCustomers";
+import {} from "../../../public/images/backround-login.jpg";
 
 type FieldType = {
   email: string;
@@ -28,54 +29,90 @@ const LoginPage = () => {
   };
 
   return (
-    <Form
-      name="basic"
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
-      style={{
-        maxWidth: 500,
-        margin: "0 auto",
-      }}
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-    >
-      <Form.Item<FieldType>
-        label="Email"
-        name="email"
-        rules={[{ required: true, message: "Please input your email!" }]}
+    <div>
+      <div className="absolute top-[40%] left-[20%]">
+        <img src="../../../public/images/backround-login.jpg" alt="" />
+      </div>
+      <Form
+        name="basic"
+        className="grid grid-cols-1"
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+        style={{
+          maxWidth: 500,
+          minWidth: 400,
+          position: "absolute",
+          top: "15%",
+          right: "50px",
+          border: "1px solid black",
+          padding: "10px 10px",
+        }}
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
       >
-        <Input />
-      </Form.Item>
-
-      <Form.Item<FieldType>
-        label="Password"
-        name="password"
-        rules={[{ required: true, message: "Please input your password!" }]}
-      >
-        <Input.Password />
-      </Form.Item>
-
-      <Form.Item<FieldType>
-        name="remember"
-        valuePropName="checked"
-        wrapperCol={{ offset: 8, span: 16 }}
-      >
-        <Checkbox>Remember me</Checkbox>
-      </Form.Item>
-
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button
-          disabled={isLoading}
-          loading={isLoading}
-          type="primary"
-          htmlType="submit"
+        <Form.Item<FieldType>
+          className="items-center"
+          wrapperCol={{ offset: 11, span: 16 }}
         >
-          {isLoading ? "Submitting" : "Login"}
-        </Button>
-      </Form.Item>
-    </Form>
+          <Image
+            src="../../../public/images/Logo_dhktdn.png"
+            width={40}
+            height={40}
+          />
+        </Form.Item>
+        <Form.Item<FieldType>
+          className="font-bold"
+          wrapperCol={{ offset: 10, span: 16 }}
+        >
+          LOGIN USER
+        </Form.Item>
+        <Form.Item<FieldType>
+          label="Email"
+          name="email"
+          rules={[{ required: true, message: "Please input your email!" }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item<FieldType>
+          label="Password"
+          name="password"
+          rules={[{ required: true, message: "Please input your password!" }]}
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item<FieldType>
+          name="remember"
+          valuePropName="checked"
+          wrapperCol={{ offset: 6, span: 16 }}
+        >
+          <Checkbox>Remember me</Checkbox>
+        </Form.Item>
+        <Form.Item<FieldType>
+          name="remember"
+          valuePropName="checked"
+          wrapperCol={{ offset: 6, span: 16 }}
+        >
+          Bạn chưa có tài khoản?
+          <Link to={"/register"} style={{ color: "blue", font: "italy" }}>
+            Đăng ký
+          </Link>
+        </Form.Item>
+        <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
+          <Button
+            disabled={isLoading}
+            loading={isLoading}
+            type="primary"
+            htmlType="submit"
+          >
+            {isLoading ? "Submitting" : "Login"}
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
   );
 };
 

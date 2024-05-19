@@ -21,7 +21,10 @@ export type TOrderItems = {
   quantity: number;
   price: number;
   discount: number;
+  thumb?: string;
+  name: string;
 };
+
 export enum EnumBoolean {
   Yes = "true",
   No = "false",
@@ -98,3 +101,26 @@ export interface ICustomer extends BaseProperties {
   province: string;
   password?: string;
 }
+export interface ICategory extends BaseProperties {
+  categoryName: string;
+  description?: string;
+  slug: string;
+}
+export interface IProduct extends BaseProperties {
+  productName: string;
+  description?: string;
+  slug: string;
+  price?: number;
+  stock?: number;
+  discount?: number;
+  modelYear?: string;
+  thumbnail?: string;
+  category: ObjectId;
+  isDelete?: boolean;
+  isBest?: boolean;
+  isHot?: boolean;
+  isNew?: boolean;
+  isHome?: boolean;
+}
+
+export type ProductModelType = Model<IProduct>;

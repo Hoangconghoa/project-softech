@@ -1,9 +1,11 @@
 import { IoLocationSharp, IoCall } from "react-icons/io5";
-import { FaSearch, FaUser, FaShoppingCart } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-
+import { FaSearch, FaShoppingCart } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { Avatar, Space } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import useAuth from "../../hooks/useCustomers";
 const Header = () => {
-  const navigate = useNavigate();
+  const { user, logout } = useAuth();
   return (
     <div>
       <header className="bg-[#3F85E8] fixed top-0 left-0 w-full ">
@@ -118,14 +120,23 @@ const Header = () => {
             </button>
           </div>
           <div className="login">
-            <button
-              onClick={() => {
-                navigate("/login");
-              }}
-              className="flex gap-2 justify-between items-center font-[20px] text-white"
-            >
-              <FaUser className="w-[20px] h-[20px]" /> Đăng nhập
-            </button>
+            <span>
+              {user ? (
+                <Space wrap size={16}>
+                  <Avatar size="small" icon={<UserOutlined />} />
+                  <strong className="">{user.email}</strong>
+                  <span className="cursor-pointer" onClick={logout}>
+                    Đăng xuất
+                  </span>
+                </Space>
+              ) : (
+                <Space wrap size={16}>
+                  <Link className="text-slate-100" to={"/login"}>
+                    Đăng Nhập
+                  </Link>
+                </Space>
+              )}
+            </span>
           </div>
           <div className="cart ">
             <button className="bg-[#1250DC] rounded-3xl px-5 py-3 flex gap-2 justify-between items-center font-[20px] text-white">

@@ -1,66 +1,133 @@
-import { FaGoogle, FaFacebook, FaInstagram } from "react-icons/fa";
-import { Link } from "react-router-dom";
-export const Register = () => {
+import { useNavigate, Link } from "react-router-dom";
+import { Button, Checkbox, Form, type FormProps, Input, Image } from "antd";
+import useAuth from "../../hooks/useCustomers";
+import {} from "../../../public/images/backround-login.jpg";
+type FieldType = {
+  email: string;
+  password: string;
+  phone: string;
+  address: string;
+  remember?: string;
+};
+
+const LoginPage = () => {
+  const { register } = useAuth();
+  const navigate = useNavigate();
+  const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+    console.log("Success:", values);
+    const response = await register(
+      values.email,
+      values.password,
+      values.phone,
+      values.address
+    );
+    console.log(response);
+    if (response.isAuthenticated) {
+      navigate("/login");
+    }
+  };
+
+  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
+    errorInfo
+  ) => {
+    console.log("Failed:", errorInfo);
+  };
   return (
-    <div className="text-center bg-[#3C424E]  w-full h-full ">
-      <form
-        action=""
-        className=" bg-slate-400 w-[400px] h-[500px] p-2 z-1 border-[1px] rounded-md fixed top-[80px] left-[500px]"
+    <div>
+      <div className="absolute top-[40%] left-[20%]">
+        <img src="../../../public/images/backround-login.jpg" alt="" />
+      </div>
+      <Form
+        name="basic"
+        className="grid grid-cols-1"
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+        style={{
+          maxWidth: 500,
+          minWidth: 400,
+          position: "absolute",
+          top: "15%",
+          right: "50px",
+          border: "1px solid black",
+          padding: "10px 10px",
+        }}
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
       >
-        <div className="font-bold text-[30px]">Đăng ký</div>
-        <div className="flex flex-col m-5 ">
-          <input
-            type="text"
-            id="Username"
-            placeholder="Email or PhoneNumber"
-            className="block w-[350px] rounded-md border-0 m-2 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+        <Form.Item<FieldType>
+          className="items-center"
+          wrapperCol={{ offset: 11, span: 16 }}
+        >
+          <Image
+            src="../../../public/images/Logo_dhktdn.png"
+            width={40}
+            height={40}
           />
+        </Form.Item>
+        <Form.Item<FieldType>
+          className="font-bold"
+          wrapperCol={{ offset: 10, span: 16 }}
+        >
+          REGISTER USER
+        </Form.Item>
+        <Form.Item<FieldType>
+          label="Email"
+          name="email"
+          rules={[{ required: true, message: "Please input your email!" }]}
+        >
+          <Input />
+        </Form.Item>
 
-          <input
-            type="text"
-            placeholder="Password"
-            className="block w-[350px] rounded-md m-2 border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          />
+        <Form.Item<FieldType>
+          label="Phone"
+          name="phone"
+          rules={[{ required: true, message: "Please input your Phone!" }]}
+        >
+          <Input />
+        </Form.Item>
 
-          <input
-            type="text"
-            placeholder="Enter the password"
-            className="block w-[350px] m-2 rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          />
-        </div>
-        <div className="flex gap-2  mx-3 text-[13px]">
-          <input type="checkbox" />
-          Remember Me
-        </div>
-        <input
-          type="submit"
-          className="rounded-md w-full bg-blue-700 text-white font-bold py-2 px-5 mt-10"
-          value={"Đăng ký"}
-        />
-        <div className="mt-8">
-          <p>Tiếp tục với </p>
-          <div className="flex gap-5 justify-center items-center mt-2">
-            <Link
-              to={"https://www.facebook.com/profile.php?id=100010200660293"}
-            >
-              <FaGoogle />
-            </Link>
-            <Link
-              to={"https://www.facebook.com/profile.php?id=100010200660293"}
-            >
-              {" "}
-              <FaFacebook />
-            </Link>
-            <Link
-              to={"https://www.facebook.com/profile.php?id=100010200660293"}
-            >
-              {" "}
-              <FaInstagram />
-            </Link>
-          </div>
-        </div>
-      </form>
+        <Form.Item<FieldType>
+          label="Address"
+          name="address"
+          rules={[{ required: true, message: "Please input your Address!" }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item<FieldType>
+          label="Password"
+          name="password"
+          rules={[{ required: true, message: "Please input your password!" }]}
+        >
+          <Input.Password />
+        </Form.Item>
+        <Form.Item<FieldType>
+          name="remember"
+          valuePropName="checked"
+          wrapperCol={{ offset: 6, span: 16 }}
+        >
+          <Checkbox>Remember me</Checkbox>
+        </Form.Item>
+        <Form.Item<FieldType>
+          name="remember"
+          valuePropName="checked"
+          wrapperCol={{ offset: 6, span: 16 }}
+        >
+          Bạn đã có tài khoản?
+          <Link to={"/login"} style={{ color: "blue", font: "italy" }}>
+            Đăng nhập
+          </Link>
+        </Form.Item>
+        <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
+          <Button type="primary" htmlType="submit">
+            Register
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };
-export default Register;
+
+export default LoginPage;

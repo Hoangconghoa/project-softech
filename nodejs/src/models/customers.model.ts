@@ -5,14 +5,14 @@ const customerSchema = new Schema<ICustomer>(
   {
     firstName: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
       min: [6, "Too few eggs"],
       max: [12, "Only allow Max 12 characters"],
     },
     lastName: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
       min: [6, "Too few eggs"],
       max: [12, "Only allow Max 12 characters"],
@@ -34,7 +34,7 @@ const customerSchema = new Schema<ICustomer>(
     },
     phone: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
       unique: true,
       lowercase: true,
@@ -51,28 +51,28 @@ const customerSchema = new Schema<ICustomer>(
     //địa chỉ
     address: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
       maxLength: 255,
     },
     //xả phường
     yard: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
       maxLength: 50,
     },
     //quận huyện
     district: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
       maxLength: 50,
     },
     //tỉnh thành phố
     province: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
       maxLength: 50,
     },

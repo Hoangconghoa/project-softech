@@ -7,7 +7,7 @@ interface User {
   email: string;
   firstName: string;
   lastName: string;
-  phoneNumber: string;
+  phone: string;
   role: string;
   photo: string;
   address: string;
@@ -23,6 +23,12 @@ interface Auth {
     password: string
   ) => Promise<{ isAuthenticated: boolean; error: string }>;
   logout: () => void;
+  register: (
+    email: string,
+    password: string,
+    phone: string,
+    address: string
+  ) => Promise<{ isAuthenticated: boolean; error: string }>;
 }
 
 const useAuth = create(
@@ -82,6 +88,37 @@ const useAuth = create(
         set({ user: null, isAuthenticated: false });
         localStorage.removeItem("token");
         localStorage.removeItem("refreshToken");
+      },
+      register: async (
+        email: string,
+        password: string,
+        phone: string,
+        address: string
+      ) => {
+        try {
+          const response = await axiosClient.post("/v1/customers", {
+            email,
+            password,
+            phone,
+            address,
+          });
+
+          if (response && response.status === 200) {
+            const isAuthenticated = response.status === 200;
+            return { isAuthenticated, error: "" };
+          } else {
+            return {
+              isAuthenticated: false,
+              error: "email đã tồn tại",
+            };
+          }
+        } catch (error) {
+          return {
+            isAuthenticated: false,
+            isLoading: false,
+            error: "Login failed",
+          };
+        }
       },
     }),
     {

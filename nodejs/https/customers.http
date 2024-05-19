@@ -2,13 +2,8 @@ POST http://localhost:8080/api/v1/customers
 Content-Type: application/json
 
 {
-      "firstName": "Ngoc Ho",
-      "lastName": "Nguyen Nhan",
-      "email": "ngocnhan@gmail.com",
-      "phone": "0988071443",
-      "address": "3121 Spinka Points",
-      "password": "Ngocnhan87dn1@23",
-      "yard":"SElm Street",
-      "district":"Wyoming",
-      "province":"Lake Adolfo"
+      "email":"hoa12345abc@gmail.com",
+      "password":"Hoanghoa123@",
+      "phone":"0903462434",
+      "address":"lệ thủy quảng bình"
 }
