@@ -103,8 +103,8 @@ const useAuth = create(
             address,
           });
 
-          if (response && response.status === 200) {
-            const isAuthenticated = response.status === 200;
+          if (response && response.status === 201) {
+            const isAuthenticated = response.status === 201;
             return { isAuthenticated, error: "" };
           } else {
             return {

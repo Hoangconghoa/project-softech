@@ -8,7 +8,7 @@ const ProductsPage = () => {
   interface DataType {
     _id: string;
     productName: string;
-    category: string;
+    category: { _id: string; categoryName: string };
     price: number;
     sort: number;
     isActive: boolean;

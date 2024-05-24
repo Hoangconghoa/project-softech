@@ -2,7 +2,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Button, Checkbox, Form, type FormProps, Input, Image } from "antd";
 import useAuth from "../../hooks/useCustomers";
 import {} from "../../../public/images/backround-login.jpg";
-
+import { message } from "antd";
 type FieldType = {
   email: string;
   password: string;
@@ -12,24 +12,31 @@ type FieldType = {
 const LoginPage = () => {
   const { login, isLoading } = useAuth();
   const navigate = useNavigate();
-
+  const [messageApi, contextHolder] = message.useMessage();
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     console.log("Success:", values);
     const response = await login(values.email, values.password);
     console.log(response);
     if (response.isAuthenticated) {
       navigate("/");
+    } else {
+      messageApi.open({
+        type: "error",
+        content: "email hoặc mật khẩu không đúng",
+      });
     }
   };
 
-  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
-    errorInfo
-  ) => {
-    console.log("Failed:", errorInfo);
+  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = () => {
+    messageApi.open({
+      type: "error",
+      content: "email hoặc mật khẩu không đúng",
+    });
   };
 
   return (
     <div>
+      {contextHolder}
       <div className="absolute top-[40%] left-[20%]">
         <img src="../../../public/images/backround-login.jpg" alt="" />
       </div>

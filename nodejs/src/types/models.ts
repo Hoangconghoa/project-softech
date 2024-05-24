@@ -106,6 +106,11 @@ export interface ICategory extends BaseProperties {
   description?: string;
   slug: string;
 }
+export interface IBrand extends BaseProperties {
+  brandName: string;
+  description?: string;
+  slug: string;
+}
 export interface IProduct extends BaseProperties {
   productName: string;
   description?: string;

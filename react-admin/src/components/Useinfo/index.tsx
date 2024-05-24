@@ -17,8 +17,8 @@ const UserInfo = () => {
           </span>
         </Space>
       ) : (
-        <Space wrap size={16}>
-          <Link className="text-slate-100" to={"/login"}>
+        <Space wrap size={40}>
+          <Link className="text-slate-100 text-[25px]" to={"/login"}>
             Login
           </Link>
         </Space>
