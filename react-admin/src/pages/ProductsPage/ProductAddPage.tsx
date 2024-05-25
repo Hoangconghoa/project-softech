@@ -62,7 +62,8 @@ const ProductAddPage = () => {
 
   const queryClient = useQueryClient();
   const fetchCreate = async (formData: DataType) => {
-    return axiosClient.post(`/v1/products`, formData);
+    console.log(formData);
+    return axiosClient.post("/v1/products", formData);
   };
 
   const mutationCreate = useMutation({
@@ -111,7 +112,7 @@ const ProductAddPage = () => {
       </Button>
       <Form
         form={updateFormEdit}
-        name="edit-form"
+        name="create-form"
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 20 }}
         initialValues={{ remember: true }}

@@ -103,11 +103,13 @@ const productSchema = new Schema(
       default: false,
       enum: ["true", "false"],
     },
+    createdAt: {
+      type: Date,
+      default: new Date(),
+    },
   },
   {
     timestamps: true,
-    //created_at
-    //updated_at
   }
 );
 

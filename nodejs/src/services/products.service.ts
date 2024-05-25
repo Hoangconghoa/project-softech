@@ -1,7 +1,8 @@
 import createError from "http-errors";
 import Product from "../models/products.model";
 import { IProduct } from "../types/models";
-
+import Category from "../models/categories.model";
+import { ObjectId } from "mongodb";
 //Tra lai ket qua
 const getAll = async (query: any) => {
   //Phân trang
@@ -263,7 +264,21 @@ const deleteProduct = async (id: string) => {
   await Product.deleteOne({ _id: product._id });
   return product;
 };
+const countProductsByCategory = async () => {
+  const result = await Category.aggregate([
+    {
+      $lookup: {
+        from: "products",
+        localField: "_id",
+        foreignField: "category",
+        as: "productList",
+      },
+    },
+  ]).exec();
+  console.log(result);
 
+  return result;
+};
 export default {
   getAll,
   getAllClient,
@@ -272,4 +287,5 @@ export default {
   createProduct,
   updateProduct,
   deleteProduct,
+  countProductsByCategory,
 };

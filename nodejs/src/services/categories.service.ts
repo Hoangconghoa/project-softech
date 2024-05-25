@@ -76,7 +76,20 @@ const deleteCategory = async (id: string) => {
   await Category.deleteOne({ _id: category._id });
   return category;
 };
-
+const countProductsByCategory = async () => {
+  const result = await Category.aggregate([
+    {
+      $lookup: {
+        from: "products",
+        localField: "_id",
+        foreignField: "category._id",
+        as: "productList",
+      },
+    },
+  ]);
+  console.log(result);
+  return result;
+};
 export default {
   getAll,
   getCategoryById,

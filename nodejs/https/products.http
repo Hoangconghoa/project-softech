@@ -2,13 +2,12 @@ POST http://localhost:8080/api/v1/products
 Content-Type: application/json
 
 {
-    "productName": "Iphone 14 Promax",
-    "description": "Iphone 14 Promax",
-    "price": 1000,
-    "modelYear": "2022",
-    "category": "{_id:'12345abcde',categoryName:'Iphone'}",
-    "brandId": "65f2be7b1d80b8bd5ecsdde",
-    "slug":"Iphone14"
+    "productName": "Iphone 14",
+    "description": "Road bike for paved roads",
+    "price": 500,
+    "modelYear": "2020",
+    "category": "664b405ef273dee2be3b1953",
+    "brandId": "664b442031f48b02bb6ba984"
 }
 
 ###

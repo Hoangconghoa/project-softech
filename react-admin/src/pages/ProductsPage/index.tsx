@@ -4,6 +4,8 @@ import { Button, Pagination, Popconfirm, Space, Table, message } from "antd";
 import type { TableProps } from "antd";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { DeleteOutlined } from "@ant-design/icons";
+import { formatDate } from "date-fns";
+
 const ProductsPage = () => {
   interface DataType {
     _id: string;
@@ -12,6 +14,7 @@ const ProductsPage = () => {
     price: number;
     sort: number;
     isActive: boolean;
+    createdAt: string;
   }
   const [messageApi, contextHoder] = message.useMessage();
   const navigate = useNavigate();
@@ -89,6 +92,14 @@ const ProductsPage = () => {
       key: "isActive",
       render: (text, recod) => {
         return <span>{recod.isActive ? "Enable" : "Disable"}</span>;
+      },
+    },
+    {
+      title: "Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text) => {
+        return <span>{formatDate(text, "dd-MM-yyyy")}</span>;
       },
     },
     {

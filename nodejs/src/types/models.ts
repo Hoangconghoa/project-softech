@@ -126,6 +126,7 @@ export interface IProduct extends BaseProperties {
   isHot?: boolean;
   isNew?: boolean;
   isHome?: boolean;
+  createdAt: Date;
 }
 
 export type ProductModelType = Model<IProduct>;

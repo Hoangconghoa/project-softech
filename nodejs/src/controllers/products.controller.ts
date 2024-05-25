@@ -118,7 +118,22 @@ const deleteProduct = async (
     next(err);
   }
 };
-
+const countProductsByCategory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const result = await productsService.countProductsByCategory();
+    // res.status(200).json({
+    //     message: `Delete Product by ID ${id}`,
+    //     product: product
+    // })
+    sendJsonSuccess(res)(result);
+  } catch (err) {
+    next(err);
+  }
+};
 export default {
   getAll,
   getAllClient,
@@ -127,4 +142,5 @@ export default {
   createProduct,
   updateProduct,
   deleteProduct,
+  countProductsByCategory,
 };

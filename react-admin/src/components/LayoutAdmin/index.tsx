@@ -113,18 +113,19 @@ const App: React.FC = () => {
             minHeight: 280,
             background: colorBgContainer,
             overflow: "initial",
+            marginBottom: "50px",
           }}
         >
           <Outlet />
         </Content>
         <Footer
-          style={{
-            textAlign: "center",
-            position: "fixed",
-            left: 0,
-            right: 0,
-            bottom: 0,
-          }}
+        // style={{
+        //   textAlign: "center",
+        //   position: "fixed",
+        //   left: 0,
+        //   right: 0,
+        //   bottom: 0,
+        // }}
         >
           Ant Design ©{new Date().getFullYear()} Created by Ant DAU
         </Footer>

@@ -11,7 +11,7 @@ import CategoriesPage from "./pages/CategoriesPage";
 import NoPage from "./pages/NoPage";
 import LoginPage from "./pages/LoginPage";
 import ProductEditPage from "./pages/ProductsPage/ProductEditPage";
-import ProductAddPage from "./pages/ProductsPage/ProductCreatePage";
+import ProductAddPage from "./pages/ProductsPage/ProductAddPage";
 // import UpdateProduct from "./pages/ProductsPage/UpdateProduct";
 
 const queryClient = new QueryClient();
