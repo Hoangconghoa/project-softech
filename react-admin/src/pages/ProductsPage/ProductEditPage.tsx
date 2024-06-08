@@ -71,8 +71,7 @@ const ProductEditPage = () => {
   const getProduct = async () => {
     return axiosClient.get(`/v1/products/${id}`);
   };
-  //Lấy danh sách về
-  // {data, isLoading, error, isError}
+
   const queryProduct = useQuery({
     queryKey: ["products-detail", id],
     queryFn: getProduct,

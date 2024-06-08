@@ -8,7 +8,7 @@ const Header = () => {
   const { user, logout } = useAuth();
   return (
     <div>
-      <header className="bg-[#3F85E8] fixed top-0 left-0 w-full ">
+      <header className="bg-[#3F85E8]  w-full ">
         <div className=" md:flex justify-between items-center py-2 border-b text-sm px-4">
           <div className="">
             <ul className="flex text-white">
@@ -138,11 +138,11 @@ const Header = () => {
               )}
             </span>
           </div>
-          <div className="cart ">
+          <Link to={"/cart"} className="cart ">
             <button className="bg-[#1250DC] rounded-3xl px-5 py-3 flex gap-2 justify-between items-center font-[20px] text-white">
               <FaShoppingCart className="w-[20px] h-[20px]" /> Giỏ hàng
             </button>
-          </div>
+          </Link>
         </div>
         <nav className="w-full bg-white rounded shadow-lg px-6 py-5 pt-7  text-center">
           <ul className="flex justify-between text-black items-center">

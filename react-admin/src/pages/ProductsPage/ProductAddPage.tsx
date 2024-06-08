@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import globalConfig from "../../constants/config";
 import { UploadOutlined } from "@ant-design/icons";
 import { AnyObject } from "antd/es/_util/type";
+
 interface DataType {
   _id?: string;
   productName: string;
@@ -33,6 +34,7 @@ interface DataType {
   thumbnail?: string;
   slug: string;
   isHome?: boolean;
+  createAt: string;
 }
 
 const ProductAddPage = () => {
@@ -52,7 +54,7 @@ const ProductAddPage = () => {
   });
 
   const getBrands = async () => {
-    return axiosClient.get(`/v1/brands`);
+    return await axiosClient.get(`/v1/brands`);
   };
   //Lấy danh sách về
   const queryBrand = useQuery({
@@ -98,18 +100,27 @@ const ProductAddPage = () => {
   const onFinishFailed: FormProps<DataType>["onFinishFailed"] = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
   return (
     <div>
       {contextHolder}
       <h1>ProductAddPage</h1>
-      <Button
-        type="primary"
-        onClick={() => {
-          navigate("/products");
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: "10px",
         }}
       >
-        Products List
-      </Button>
+        <Button
+          type="primary"
+          onClick={() => {
+            navigate("/products");
+          }}
+        >
+          Products List
+        </Button>
+      </div>
       <Form
         form={updateFormEdit}
         name="create-form"
@@ -216,7 +227,7 @@ const ProductAddPage = () => {
 
         <Form.Item<DataType>
           hasFeedback
-          label="Stock"
+          label="Quantity"
           name="stock"
           rules={[
             { required: false, message: "Please Stock" },

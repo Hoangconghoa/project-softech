@@ -3,14 +3,12 @@ import { IProduct, ProductModelType } from "../types/models";
 import mongooseLeanVirtuals from "mongoose-lean-virtuals";
 import buildSlug from "../helpers/slugHepers";
 
-const productSchema = new Schema(
+const historySchema = new Schema(
   {
     productName: {
       type: String,
-      required: [true, "Yeu cau dien productName"],
-      unique: [true, "productName khong the trung lap"],
-      minLength: [5, "Toi thieu phai du 5 ki tu"],
-      maxLength: [255, "Toi da cho phep 255 ki tu"],
+      required: [true, "Yeu cau dien historyName"],
+      unique: [true, "historyName khong the trung lap"],
     },
     /**
      * QUAN HỆ ONE-ONE
@@ -117,28 +115,28 @@ const productSchema = new Schema(
 );
 
 /* Khai báo khóa ngoại với Category Model */
-productSchema.virtual("brand", {
+historySchema.virtual("brand", {
   ref: "Brand",
   localField: "brandId",
   foreignField: "_id",
   justOne: true,
 });
 
-productSchema.set("toJSON", { virtuals: true });
+historySchema.set("toJSON", { virtuals: true });
 // Virtuals in console.log()
-productSchema.set("toObject", { virtuals: true });
+historySchema.set("toObject", { virtuals: true });
 //dùng cái này cho hiệu suất join nhanh hơn
 //khi dùng thằng này
 //.lean({virtuals: true})
-productSchema.plugin(mongooseLeanVirtuals);
+historySchema.plugin(mongooseLeanVirtuals);
 
 //Đăng ký một trường ảo
-productSchema.virtual("url").get(function () {
-  return "/products/" + this._id;
+historySchema.virtual("url").get(function () {
+  return "/historys/" + this._id;
 });
 
 //Middleware
-productSchema.pre("save", async function (next) {
+historySchema.pre("save", async function (next) {
   /**
    * Tự động tạo slug khi slug ko được truyền
    * hoặc slug = ''
@@ -148,11 +146,11 @@ productSchema.pre("save", async function (next) {
   const phut = now.getMinutes().toString().padStart(2, "0");
   const giay = now.getSeconds().toString().padStart(2, "0");
   this.time = `${gio}:${phut}:${giay}`;
-  if (this.slug == "" || !this.slug) {
-    this.slug = buildSlug(this.productName);
-  }
+  //   if (this.slug == "" || !this.slug) {
+  //     this.slug = buildSlug(this.productName);
+  //   }
   next();
 });
 
-const Product = model<IProduct, ProductModelType>("Product", productSchema);
-export default Product;
+const history = model<IProduct, ProductModelType>("history", historySchema);
+export default history;

@@ -17,6 +17,7 @@ import type { TableProps, PaginationProps } from "antd";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosClient } from "../../librarys/AxiosClient";
 import { useNavigate, useSearchParams } from "react-router-dom";
+type NoticeType = "success" | "error";
 interface DataType {
   _id: string;
   categoryName: string;
@@ -29,7 +30,7 @@ interface DataType {
 const CategoriesPage = () => {
   const [messageApi, contextHolder] = message.useMessage();
 
-  const showMessage = (text, level = "success") => {
+  const showMessage = (text: any, level: NoticeType = "success") => {
     messageApi.open({
       type: level,
       content: text,
@@ -203,6 +204,11 @@ const CategoriesPage = () => {
 
   const columns: TableProps<DataType>["columns"] = [
     {
+      title: "STT",
+      key: "stt",
+      render: (_, __, index) => (int_page - 1) * int_limit + index + 1,
+    },
+    {
       title: "Name",
       dataIndex: "categoryName",
       key: "categoryName",
@@ -222,7 +228,7 @@ const CategoriesPage = () => {
       title: "Active",
       key: "isActive",
       dataIndex: "isActive",
-      render: (text, record) => {
+      render: (record) => {
         return <span>{record.isActive ? "Enable" : "Disable"}</span>;
       },
     },
@@ -256,6 +262,15 @@ const CategoriesPage = () => {
           >
             <Button danger type="dashed" icon={<DeleteOutlined />} />
           </Popconfirm>
+          <Button
+            type="link"
+            onClick={() => {
+              console.log("Edit", record);
+              navigate(`/category/add/${record._id}`);
+            }}
+          >
+            Edit
+          </Button>
         </Space>
       ),
     },

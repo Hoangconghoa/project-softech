@@ -61,6 +61,7 @@ export interface IOrder extends BaseProperties {
   orderItems: TOrderItems[];
   actions?: TActionOrder[];
   createdAt?: Date;
+  time: string;
 }
 // Models and schemas
 export type OrderModelType = Model<IOrder>;
@@ -127,6 +128,7 @@ export interface IProduct extends BaseProperties {
   isNew?: boolean;
   isHome?: boolean;
   createdAt: Date;
+  time: string;
 }
 
 export type ProductModelType = Model<IProduct>;

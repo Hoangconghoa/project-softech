@@ -36,10 +36,7 @@ const items: MenuProps["items"] = [
   getItem("Categories", "Categories", <UnorderedListOutlined />),
   getItem("Brands", "Brands", <UnorderedListOutlined />),
   getItem("Products", "Products", <SolutionOutlined />),
-  getItem("Orders", "Orders", <FileOutlined />, [
-    getItem("Thông tin đơn hàng", "g1", null),
-    getItem("Thanh Toán", "g2", null),
-  ]),
+  getItem("Orders", "Orders", <FileOutlined />),
   getItem("Staffs", "Staffs", <UserOutlined />),
   getItem("Setting", "Setting", <SettingFilled />),
 ];

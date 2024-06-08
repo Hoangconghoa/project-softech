@@ -29,7 +29,7 @@ const LoginPage = () => {
     } else {
       messageApi.open({
         type: "error",
-        content: "email hoặc sđt đã tồn tại",
+        content: `email hoặc sđt đã tồn tại `,
       });
     }
   };

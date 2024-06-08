@@ -145,6 +145,9 @@ const orderSchema = new Schema<IOrder, OrderModelType>(
       ref: "Staff",
       required: false,
     },
+    time: {
+      type: String,
+    },
     /**
      * Danh sách sản phẩm của Order
      */
@@ -158,5 +161,14 @@ const orderSchema = new Schema<IOrder, OrderModelType>(
     timestamps: true, //true tự tạo ra createAt và updateAt
   }
 );
+orderSchema.pre("save", async function (next) {
+  const now = new Date();
+  const gio = now.getHours().toString().padStart(2, "0");
+  const phut = now.getMinutes().toString().padStart(2, "0");
+  const giay = now.getSeconds().toString().padStart(2, "0");
+  this.time = `${gio}:${phut}:${giay}`;
+
+  next();
+});
 const Order = model<IOrder, OrderModelType>("Order", orderSchema);
 export default Order;
