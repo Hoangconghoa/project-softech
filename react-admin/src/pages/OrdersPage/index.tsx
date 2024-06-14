@@ -1,9 +1,9 @@
 import { axiosClient } from "../../librarys/AxiosClient";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Button, Pagination, Popconfirm, Space, Table, message } from "antd";
+import { Button, Pagination, Table } from "antd";
 import type { TableProps } from "antd";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { DeleteOutlined } from "@ant-design/icons";
+import { useQuery } from "@tanstack/react-query";
+// import { DeleteOutlined } from "@ant-design/icons";
 
 import moment from "moment";
 
@@ -33,7 +33,7 @@ const OrdersPage = () => {
   }
   const fmDate = (date: any, format = "DD/MM/YYYY HH:mm:ss") =>
     moment(date).format(format);
-  const [messageApi, contextHoder] = message.useMessage();
+  // const [messageApi, contextHoder] = message.useMessage();
   const navigate = useNavigate();
   const [param] = useSearchParams();
   const page = param.get("page");
@@ -49,35 +49,35 @@ const OrdersPage = () => {
     queryFn: () => getOrders(int_page, int_limit),
   });
 
-  //xoa
-  const queryClient = useQueryClient();
-  //=========================== FETCH DELETE =================================//
-  // Mutations Để xóa danh mục
-  const fetchDelete = async (id: string) => {
-    return axiosClient.delete("/v1/orders/" + id);
-  };
-  const deleteMutation = useMutation({
-    mutationFn: fetchDelete,
-    onSuccess: () => {
-      console.log("Xóa category thành công !");
-      messageApi.open({
-        type: "success",
-        content: "Delete success !",
-      });
-      // Làm tươi lại danh sách danh mục dựa trên key đã định nghĩa
-      queryClient.invalidateQueries({
-        queryKey: ["products", int_page, int_limit],
-      });
-    },
-    onError: (err) => {
-      console.log("Xóa có lỗi !", err);
-      //msgError('Xóa Product không thành công !');
-      messageApi.open({
-        type: "error",
-        content: "Delete fail !",
-      });
-    },
-  });
+  // //xoa
+  // const queryClient = useQueryClient();
+  // //=========================== FETCH DELETE =================================//
+  // // Mutations Để xóa danh mục
+  // const fetchDelete = async (id: string) => {
+  //   return axiosClient.delete("/v1/orders/" + id);
+  // };
+  // const deleteMutation = useMutation({
+  //   mutationFn: fetchDelete,
+  //   onSuccess: () => {
+  //     console.log("Xóa category thành công !");
+  //     messageApi.open({
+  //       type: "success",
+  //       content: "Delete success !",
+  //     });
+  //     // Làm tươi lại danh sách danh mục dựa trên key đã định nghĩa
+  //     queryClient.invalidateQueries({
+  //       queryKey: ["products", int_page, int_limit],
+  //     });
+  //   },
+  //   onError: (err) => {
+  //     console.log("Xóa có lỗi !", err);
+  //     //msgError('Xóa Product không thành công !');
+  //     messageApi.open({
+  //       type: "error",
+  //       content: "Delete fail !",
+  //     });
+  //   },
+  // });
   const tinhtong = () => {
     queryOders.data?.data.data.orders.map((order: DataType) => {
       let totalOrder = 0;
@@ -94,13 +94,13 @@ const OrdersPage = () => {
       currency: "VND",
     }).format(amount);
   };
-  const sum = () => {
-    let sumTotal = 0;
-    queryOders.data?.data.data.orders.map((order: DataType) => {
-      sumTotal += order.total;
-    });
-    return sumTotal;
-  };
+  // const sum = () => {
+  //   let sumTotal = 0;
+  //   queryOders.data?.data.data.orders.map((order: DataType) => {
+  //     sumTotal += order.total;
+  //   });
+  //   return sumTotal;
+  // };
   const columns: TableProps<DataType>["columns"] = [
     {
       title: "STT",
@@ -112,14 +112,6 @@ const OrdersPage = () => {
       dataIndex: "_id",
       key: "_id",
       render: (text) => <a>#{text}</a>,
-    },
-    {
-      title: "customer",
-      dataIndex: "customer",
-      key: "customer",
-      render: (text) => {
-        return <span>{text}</span>;
-      },
     },
     {
       title: "Date",
@@ -154,9 +146,12 @@ const OrdersPage = () => {
     {
       title: "View Details",
 
-      render: () => {
+      render: (recod) => {
         return (
           <button
+            onClick={() => {
+              navigate(`/orders/${recod._id}`);
+            }}
             style={{
               alignItems: "flex-start",
               backgroundColor: "#556ee6",
@@ -175,42 +170,42 @@ const OrdersPage = () => {
         );
       },
     },
-    {
-      title: "Action",
-      key: "Action",
-      render: (_, recod) => (
-        <Space>
-          <Button
-            type="dashed"
-            onClick={() => {
-              navigate(`/orders/${recod._id}`);
-            }}
-          >
-            Edit
-          </Button>
-          <Popconfirm
-            title="Are you sure to delete?"
-            onConfirm={() => {
-              console.log("DELETE", recod);
-              deleteMutation.mutate(recod._id as string);
-            }}
-            onCancel={() => {}}
-            okText="Đồng ý"
-            okType="danger"
-            cancelText="Đóng"
-          >
-            <Button type="dashed">
-              <DeleteOutlined />
-            </Button>
-          </Popconfirm>
-        </Space>
-      ),
-    },
+    // {
+    //   title: "Action",
+    //   key: "Action",
+    //   render: (_, recod) => (
+    //     <Space>
+    //       <Button
+    //         type="dashed"
+    //         onClick={() => {
+    //           navigate(`/orders/${recod._id}`);
+    //         }}
+    //       >
+    //         Edit
+    //       </Button>
+    //       <Popconfirm
+    //         title="Are you sure to delete?"
+    //         onConfirm={() => {
+    //           console.log("DELETE", recod);
+    //           deleteMutation.mutate(recod._id as string);
+    //         }}
+    //         onCancel={() => {}}
+    //         okText="Đồng ý"
+    //         okType="danger"
+    //         cancelText="Đóng"
+    //       >
+    //         <Button type="dashed">
+    //           <DeleteOutlined />
+    //         </Button>
+    //       </Popconfirm>
+    //     </Space>
+    //   ),
+    // },
   ];
 
   return (
     <div>
-      {contextHoder}
+      {/* {contextHoder} */}
       <h2>Orders</h2>
       <Button
         type="primary"
@@ -227,16 +222,7 @@ const OrdersPage = () => {
             columns={columns}
             dataSource={queryOders.data.data.data.orders}
           />
-          <div
-            style={{
-              display: "flex",
-              gap: "653px",
-              marginLeft: "15px",
-            }}
-          >
-            <p>Sum</p>
-            <p>{formatCurrency(sum())}</p>
-          </div>
+
           <div style={{ marginTop: 20 }}>
             <Pagination
               defaultCurrent={int_page}

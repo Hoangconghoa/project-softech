@@ -16,6 +16,7 @@ import ProductAddPage from "./pages/ProductsPage/ProductAddPage";
 import ProductWithCategories from "./pages/CategoriesPage/ProductWithCategories";
 import OrdersPage from "./pages/OrdersPage";
 import OrderAddPage from "./pages/OrdersPage/OrderAddPage";
+import OrderDetailsPage from "./pages/OrdersPage/OrderDetailsPage";
 // import UpdateProduct from "./pages/ProductsPage/UpdateProduct";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ function App() {
               <Route index element={<DashBoardPage />} />
               <Route path="/products" element={<ProductsPage />} />
               <Route path="/orders" element={<OrdersPage />} />
+              <Route path="/orders/:id" element={<OrderDetailsPage />} />
               <Route path="/orders/add" element={<OrderAddPage />} />
               <Route path="/products/add" element={<ProductAddPage />} />
               <Route path="/products/:id" element={<ProductEditPage />} />

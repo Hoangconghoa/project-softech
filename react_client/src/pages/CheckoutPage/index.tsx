@@ -3,22 +3,35 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import useAuth from "../../hooks/useCustomers";
+import { axiosClient } from "../../librarys/axiosClient";
+
+import { message } from "antd";
 const schema = yup
   .object({
     firstName: yup.string().min(4).max(160).required(),
     lastName: yup.string().min(4).max(160).required(),
-    email: yup.string().email().optional(),
+    email: yup.string().email().optional().required(),
     phone: yup.string().max(11).required(),
     shippingAddress: yup.string().max(255).required(),
-    shippingYard: yup.string().max(80),
-    shippingDistrict: yup.string().max(80),
-    shippingProvince: yup.string().max(80),
+    shippingYard: yup.string().max(80).required(),
+    shippingDistrict: yup.string().max(80).required(),
+    shippingProvince: yup.string().max(80).required(),
     paymentType: yup.string().required().oneOf(["CASH", "COD", "CREDIT"]),
   })
   .required();
-
+interface DataType {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  shippingAddress: string;
+  shippingYard: string;
+  shippingDistrict: string;
+  shippingProvince: string;
+}
 const Checkout = () => {
   const { items, total, placeOrder, isLoading, error } = useCartStore();
+  const [messageApi, contextHolder] = message.useMessage();
   const { user } = useAuth();
   const {
     register,
@@ -32,26 +45,45 @@ const Checkout = () => {
    *
    * Khi click vào nút Place Order
    */
-  const userId = user ? user._id : "66613992d749e2d05a44e815";
+
+  const fetchCreate = async (formData: DataType) => {
+    console.log(formData);
+    const response = await axiosClient.post("/v1/customers", formData);
+    return response.data;
+  };
+
   const onSubmit = async (data: any) => {
-    console.log(data);
-    console.log(items);
+    let userId = user ? user._id : null;
+
+    if (!userId) {
+      try {
+        const customerData: DataType = {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          phone: data.phone,
+          shippingAddress: data.shippingAddress,
+          shippingYard: data.shippingYard,
+          shippingDistrict: data.shippingDistrict,
+          shippingProvince: data.shippingProvince,
+        };
+
+        const customer = await fetchCreate(customerData);
+        userId = customer.data._id;
+        console.log(userId);
+      } catch (error) {
+        console.error("Error creating customer:", error);
+        messageApi.open({
+          type: "error",
+          content: "Create customer error!",
+        });
+        return;
+      }
+    }
 
     const payload = {
-      //Thông tin khách hàng
-
       customer: {
         _id: userId,
-        // customerName: data.firstName, //Nếu đã login thì lấy
-        // customerMobile: data.phone,
-        // firstName: data.firstName,
-        // lastName: data.lastName,
-        // email: data.email,
-        // phone: data.phone,
-        // address: data.shippingAddress,
-        // yard: data.shippingYard,
-        // district: data.shippingDistrict,
-        // province: data.shippingProvince,
       },
 
       // Sản phẩm của đơn hàng
@@ -70,6 +102,7 @@ const Checkout = () => {
 
   return (
     <>
+      {contextHolder}
       {error && <p className="my-5 text-red-500">{error}</p>}
       <div className="flex flex-col items-center border-b bg-white py-4 sm:flex-row sm:px-10 lg:px-20 xl:px-32">
         <a href="#" className="text-2xl font-bold text-gray-800">
