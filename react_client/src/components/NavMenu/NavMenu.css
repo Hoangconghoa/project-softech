@@ -1,0 +1,16 @@
+
+.navmenu {
+    transform-origin: bottom;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    visibility: hidden;
+  }
+  
+  .group:hover .navmenu {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    /* transform-origin: bottom; */
+  }
+  
