@@ -1,188 +1,235 @@
-import { IoLocationSharp, IoCall } from "react-icons/io5";
-import { FaSearch, FaShoppingCart } from "react-icons/fa";
+import { CiShoppingCart, CiUser } from "react-icons/ci";
 import { Link } from "react-router-dom";
-import { Avatar, Space } from "antd";
+import { Avatar, Dropdown, Space } from "antd";
+
+import { FaMobileAlt, FaHome, FaTabletAlt, FaNewspaper } from "react-icons/fa";
 import { UserOutlined } from "@ant-design/icons";
+import { FaComputer } from "react-icons/fa6";
+import { MdHeadsetMic, MdDevices, MdOutlinePayment, MdOutlineSupportAgent } from "react-icons/md";
+import { FiMusic } from "react-icons/fi";
 import useAuth from "../../hooks/useCustomers";
+import England from "../../../public/images/england.jpg";
+import Gernamy from "../../../public/images/duc.png";
+import France from "../../../public/images/france.png";
+import USD from "../../../public/images/usd.svg";
+import EURO from "../../../public/images/euro.png";
+import GBP from "../../../public/images/logogdb.webp";
+import DropdownMenu from "../DropdownMenu/DropdownMenu";
+import { GoChevronDown, GoRocket } from "react-icons/go";
+import { IoReload } from "react-icons/io5";
+
+import NavMenu from "../NavMenu/NavMenu";
+import SwiperGallery from "../Swiper/SwiperGallery";
+import Support from "../support/support";
 const Header = () => {
   const { user, logout } = useAuth();
+  const menuLanguage = [
+
+    { label: 'Germany', path: '/germany', img: Gernamy },
+    { label: 'France', path: '/france', img: France }
+  ];
+  const menuExchange = [
+    { label: 'USD', path: '/USD', img: USD },
+    { label: 'EURO', path: '/EURO', img: EURO },
+    { label: 'GBP', path: '/GBP', img: GBP },
+  ]
   return (
     <div>
-      <header className="bg-[#3F85E8]  w-full ">
-        <div className=" md:flex justify-between items-center py-2 border-b text-sm px-4">
-          <div className="">
-            <ul className="flex text-white">
-              <li>
-                <div className="flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 h-6 fill-current text-white"
-                    viewBox="0 0 24 24"
-                  >
-                    <IoLocationSharp />
-                  </svg>
-
-                  <span className="ml-2">Da Nang</span>
-                </div>
-              </li>
-              <li className="ml-6">
-                <div className="flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 h-6 fill-current text-white"
-                    viewBox="0 0 24 24"
-                  >
-                    <IoCall />
-                  </svg>
-
-                  <span className="ml-2">0903462434</span>
-                </div>
-              </li>
-            </ul>
+      <header className="bg-[#ffffff]  w-full">
+        <div className=" flex justify-between items-center py-3 text-sm px-4 font-medium text-gray-500">
+          <div className="mx-24 "  >
+            <p className="font-sans text-gray-500">SHOPPING CENTER <b className="text-black">Hoàng Công Hóa</b></p>
           </div>
-
-          <div className="">
-            <ul className="flex justify-end text-white">
-              <li>
-                <a href="#" target="_blank" title="">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    className="fill-current"
-                  >
-                    <path d="M20,3H4C3.447,3,3,3.448,3,4v16c0,0.552,0.447,1,1,1h8.615v-6.96h-2.338v-2.725h2.338v-2c0-2.325,1.42-3.592,3.5-3.592	c0.699-0.002,1.399,0.034,2.095,0.107v2.42h-1.435c-1.128,0-1.348,0.538-1.348,1.325v1.735h2.697l-0.35,2.725h-2.348V21H20	c0.553,0,1-0.448,1-1V4C21,3.448,20.553,3,20,3z"></path>
-                  </svg>
-                </a>
-              </li>
-
-              <li className="ml-6">
-                <a href="#" target="_blank" title="">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    className="fill-current"
-                  >
-                    <path d="M19.633,7.997c0.013,0.175,0.013,0.349,0.013,0.523c0,5.325-4.053,11.461-11.46,11.461c-2.282,0-4.402-0.661-6.186-1.809	c0.324,0.037,0.636,0.05,0.973,0.05c1.883,0,3.616-0.636,5.001-1.721c-1.771-0.037-3.255-1.197-3.767-2.793	c0.249,0.037,0.499,0.062,0.761,0.062c0.361,0,0.724-0.05,1.061-0.137c-1.847-0.374-3.23-1.995-3.23-3.953v-0.05	c0.537,0.299,1.16,0.486,1.82,0.511C3.534,9.419,2.823,8.184,2.823,6.787c0-0.748,0.199-1.434,0.548-2.032	c1.983,2.443,4.964,4.04,8.306,4.215c-0.062-0.3-0.1-0.611-0.1-0.923c0-2.22,1.796-4.028,4.028-4.028	c1.16,0,2.207,0.486,2.943,1.272c0.91-0.175,1.782-0.512,2.556-0.973c-0.299,0.935-0.936,1.721-1.771,2.22	c0.811-0.088,1.597-0.312,2.319-0.624C21.104,6.712,20.419,7.423,19.633,7.997z"></path>
-                  </svg>
-                </a>
-              </li>
-
-              <li className="ml-6">
-                <a href="#" target="_blank" title="">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    className="fill-current"
-                  >
-                    <path d="M20.947,8.305c-0.011-0.757-0.151-1.508-0.419-2.216c-0.469-1.209-1.424-2.165-2.633-2.633 c-0.699-0.263-1.438-0.404-2.186-0.42C14.747,2.993,14.442,2.981,12,2.981s-2.755,0-3.71,0.055 c-0.747,0.016-1.486,0.157-2.185,0.42C4.896,3.924,3.94,4.88,3.472,6.089C3.209,6.788,3.067,7.527,3.053,8.274 c-0.043,0.963-0.056,1.268-0.056,3.71s0,2.754,0.056,3.71c0.015,0.748,0.156,1.486,0.419,2.187 c0.469,1.208,1.424,2.164,2.634,2.632c0.696,0.272,1.435,0.426,2.185,0.45c0.963,0.043,1.268,0.056,3.71,0.056s2.755,0,3.71-0.056 c0.747-0.015,1.486-0.156,2.186-0.419c1.209-0.469,2.164-1.425,2.633-2.633c0.263-0.7,0.404-1.438,0.419-2.187 c0.043-0.962,0.056-1.267,0.056-3.71C21.003,9.572,21.003,9.262,20.947,8.305z M11.994,16.602c-2.554,0-4.623-2.069-4.623-4.623 s2.069-4.623,4.623-4.623c2.552,0,4.623,2.069,4.623,4.623S14.546,16.602,11.994,16.602z M16.801,8.263 c-0.597,0-1.078-0.482-1.078-1.078s0.481-1.078,1.078-1.078c0.595,0,1.077,0.482,1.077,1.078S17.396,8.263,16.801,8.263z"></path>
-                    <circle cx="11.994" cy="11.979" r="3.003"></circle>
-                  </svg>
-                </a>
-              </li>
-
-              <li className="ml-6">
-                <a href="#" target="_blank" title="">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    className="fill-current"
-                  >
-                    <path d="M21.593,7.203c-0.23-0.858-0.905-1.535-1.762-1.766C18.265,5.007,12,5,12,5S5.736,4.993,4.169,5.404	c-0.84,0.229-1.534,0.921-1.766,1.778c-0.413,1.566-0.417,4.814-0.417,4.814s-0.004,3.264,0.406,4.814	c0.23,0.857,0.905,1.534,1.763,1.765c1.582,0.43,7.83,0.437,7.83,0.437s6.265,0.007,7.831-0.403c0.856-0.23,1.534-0.906,1.767-1.763	C21.997,15.281,22,12.034,22,12.034S22.02,8.769,21.593,7.203z M9.996,15.005l0.005-6l5.207,3.005L9.996,15.005z"></path>
-                  </svg>
-                </a>
+          <div >
+            <ul className="flex gap-4 mx-24 font-sans ">
+              <li>Store Location  </li>
+              <p>|</p>
+              <li> Track Your Order  </li>
+              <p>|</p>
+              <li> <DropdownMenu label="USD" items={menuExchange} /> </li>
+              <p>|</p>
+              <li className="flex justify-center items-center gap-1 ">
+                <img src={England} alt="" width={30} height={30} className="float-left" />
+                <DropdownMenu label="English" items={menuLanguage} />
+                <GoChevronDown />
               </li>
             </ul>
           </div>
         </div>
-
-        <div className="flex flex-wrap items-center justify-between p-4">
-          <div className="w-1/2 md:w-auto">
-            <a href="index.html" className="text-white font-bold text-2xl">
-              Dentail
+        {/* Logo, menu sổ, search, giỏ hàng and login */}
+        <div className="flex  items-center justify-between text-sm p-4">
+          <div className=" logo mx-24">
+            <a href="index.html" className="text-gray-500 font-bold text-4xl flex font-sans">
+              <p className="text-black">Mart</p><p className="text-blue-700">Fury</p>
             </a>
           </div>
-          <div className="search flex justify-between items-center">
-            <input
-              className=" w-[500px] h-[50px] font-serif rounded-3xl p-2"
-              type="text"
-              placeholder="search"
-            />
-            <button className="ml-[-50px]">
-              <FaSearch className="w-[30px] h-[30px]" />
-            </button>
+          {/* Sổ menu */}
+          <div className="navMenu z-30">
+            <NavMenu />
           </div>
-          <div className="login">
-            <span>
+
+          <div className="flex -ml-56">
+            <select name="" id="" className="w-[140px] h-[45px] border-gray-400 border-solid border-x border-y">
+              <option value="0" className="">All</option>
+              <option value="1">Babies & Mons</option>
+              <option value="2">Books & Office</option>
+              <option value="3">Cars & Motocyles</option>
+              <option value="4">Cloting & Apparel</option>
+              <option value="5">Accessories</option>
+              <option value="6">Bags</option>
+              <option value="7">Kid's Fashion</option>
+              <option value="8">Mens</option>
+              <option value="9">Shoes</option>
+              <option value="10">Sunglasses</option>
+              <option value="11">Womens</option>
+              <option value="12">Computers & Technologies</option>
+              <option value="13">Desktop PC</option>
+              <option value="14">Laptop</option>
+              <option value="15">Smartphones</option>
+              <option value="16">Consumer Electrics</option>
+              <option value="17">Air Conditioners</option>
+              <option value="18">Accessories</option>
+              <option value="19">Type Hanging Cell</option>
+              <option value="20">Audios & Theaters</option>
+              <option value="21">Headphone</option>
+              <option value="22">Home Theater System</option>
+              <option value="23">Speakers</option>
+              <option value="24">Car Election</option>
+              <option value="25">Audio & Video</option>
+              <option value="26">Car Security</option>
+              <option value="27">Radar Detector</option>
+              <option value="28">Vahicle GPS</option>
+              <option value="29">Office Electronics</option>
+              <option value="30">Printers</option>
+              <option value="31">Projectors</option>
+              <option value="32">Scanners</option>
+              <option value="33">Store & Business</option>
+              <option value="34">Refrigerators</option>
+              <option value="35">Tv Televisions</option>
+              <option value="36">4K Ultra HS TVs</option>
+              <option value="37">LED TVs</option>
+              <option value="38">OLED TVs</option>
+              <option value="39">Washing Machines</option>
+              <option value="40">Type Drying Clothes</option>
+              <option value="41">Type Vertical</option>
+              <option value="42">Garden & Kitchen</option>
+              <option value="43">Cookware</option>
+              <option value="44">Decoration</option>
+              <option value="45">Furniture</option>
+              <option value="46">Garden Tools</option>
+              <option value="47">Home Improvement</option>
+              <option value="48">Powers And Handfools</option>
+              <option value="49">Utensil & Gadget</option>
+              <option value="50">Health & Beauty</option>
+              <option value="51">Equipments</option>
+              <option value="52">Hair Care</option>
+              <option value="53">Perfumer</option>
+              <option value="54">Wine Cabinets</option>
+            </select>
+            <div className="search flex justify-between items-center ">
+              <input
+                className=" w-[450px] h-[45px] font-sans  border-gray-400 border-solid border-y placeholder: pl-3 pr-3 "
+                type="text"
+                placeholder="I'm shopping for..."
+              />
+              <button className="ml-[-20px] p-3 bg-[#0071df] text-white font-bold w-[85px] h-[45px] rounded-r-lg ">
+                Search
+              </button>
+            </div>
+          </div>
+          <Link to={"/cart"} className="cart mt-3">
+            <button className="hover:text-blue-600">
+              <CiShoppingCart className="text-5xl -ml-28" />
+            </button>
+          </Link>
+          <div className="login flex justify-center items-center mt-2">
+            <CiUser className="text-5xl float-left -ml-80" />
+            <span className="font-bold text-xl font-mono">
               {user ? (
                 <Space wrap size={16}>
                   <Avatar size="small" icon={<UserOutlined />} />
                   <strong className="">{user.email}</strong>
-                  <span className="cursor-pointer" onClick={logout}>
-                    Đăng xuất
+                  <span className="cursor-pointer text-4xl text-stone-900" onClick={logout}>
+                    SignOut
                   </span>
                 </Space>
               ) : (
                 <Space wrap size={16}>
-                  <Link className="text-slate-100" to={"/login"}>
-                    Đăng Nhập
+                  <Link className="text-stone-900" to={"/login"}>
+                    Login
                   </Link>
                 </Space>
               )}
             </span>
           </div>
-          <Link to={"/cart"} className="cart ">
-            <button className="bg-[#1250DC] rounded-3xl px-5 py-3 flex gap-2 justify-between items-center font-[20px] text-white">
-              <FaShoppingCart className="w-[20px] h-[20px]" /> Giỏ hàng
-            </button>
-          </Link>
         </div>
-        <nav className="w-full bg-white rounded shadow-lg px-6 py-5 pt-7  text-center">
-          <ul className="flex justify-between text-black items-center">
-            <li>
+        {/* Thanh menu */}
+        <nav className="w-full bg-blue-700 shadow-lg px-6 py-5 pt-7  text-center">
+          <ul className="flex justify-evenly text-base text-white font-bold uppercase items-center">
+            <li className="flex justify-center items-center gap-2">
+              <FaHome />
               <a className="" href="#">
-                Trang chủ
+                Home
               </a>
             </li>
-            <li className="">
+            <li className="flex justify-center items-center gap-2">
+              <FaMobileAlt />
               <a className="" href="#">
-                Điện Thoại
+                Smartphone
               </a>
             </li>
-            <li className="md:ml-4">
-              <a className="py-2 inline-block  md:px-2 font-semibold" href="#">
-                Máy Tính
+            <li className="flex justify-center items-center gap-2">
+              <FaTabletAlt />
+              <a className="" href="#">
+                Tablets
               </a>
             </li>
-            <li className="md:ml-4 md:hidden lg:block">
-              <a className="py-2 inline-block  md:px-2 font-semibold" href="#">
-                Loa
+            <li className="flex justify-center items-center gap-2">
+              <FaComputer />
+              <a className="" href="#">
+                Laptop
               </a>
             </li>
-            <li className="md:ml-4">
-              <a className="py-2 inline-block md:px-2 font-semibold" href="#">
-                Linh Kiện PC
+            <li className="flex justify-center items-center gap-2">
+              <FiMusic />
+              <a className="" href="#">
+                Sounds
               </a>
             </li>
-            <li className="md:ml-4">
-              <a className="py-2 inline-block  md:px-2 font-semibold" href="#">
-                Phụ Kiện
+            <li className="flex justify-center items-center gap-2">
+              <MdDevices />
+              <a className="" href="#">
+                Technology equipment
               </a>
             </li>
-            <li className="md:ml-4">
-              <a className="py-2 inline-block  md:px-2 font-semibold" href="#">
-                Tin Công Nghệ
+            <li className="flex justify-center items-center gap-2">
+              <MdHeadsetMic />
+              <a className="" href="#">
+                ACCESORIES
+              </a>
+            </li>
+            <li className="flex justify-center items-center gap-2">
+              <FaNewspaper />
+              <a className="" href="#">
+                Tech news
               </a>
             </li>
           </ul>
         </nav>
+        {/* Banner */}
+        <div className="">
+          <SwiperGallery />
+        </div>
+        {/*  Ho Tro*/}
+        <div className="flex gap-10 justify-evenly items-center mt-12 mx-24">
+          <Support icon={<GoRocket />} label="Free Delivery" title="For all oders over $99" />
+          <hr className="  h-[45px] border-gray-400 border-solid border-x" />
+          <Support icon={<IoReload />} label="90 Days Return" title="If goods have problems" />
+          <hr className="  h-[45px] border-gray-400 border-solid border-x" />
+          <Support icon={<MdOutlinePayment />} label="Secure Payment" title="100% secure payment" />
+          <hr className="  h-[45px] border-gray-400 border-solid border-x" />
+          <Support icon={<MdOutlineSupportAgent />} label="24/7 Support" title="Dedicated support" />
+        </div>
       </header>
     </div>
   );
