@@ -35,6 +35,8 @@ interface DataType {
   slug: string;
   isHome?: boolean;
   createAt: string;
+  isHot?: boolean;
+  isBest?: boolean;
 }
 
 const ProductAddPage = () => {
@@ -54,7 +56,7 @@ const ProductAddPage = () => {
   });
 
   const getBrands = async () => {
-    return await axiosClient.get(`/v1/brands`);
+    return await axiosClient.get(`/v1/brands?page=1&limit=20`);
   };
   //Lấy danh sách về
   const queryBrand = useQuery({
@@ -300,11 +302,20 @@ const ProductAddPage = () => {
             <Checkbox>is Home</Checkbox>
           </Form.Item>
 
+          <Form.Item name="isHot" valuePropName="checked">
+            <Checkbox>is Hot</Checkbox>
+          </Form.Item>
+
+          <Form.Item name="isBest" valuePropName="checked">
+            <Checkbox>is Bet</Checkbox>
+          </Form.Item>
+
           <Form.Item name="isActive" valuePropName="checked">
             <Checkbox checked={true} defaultChecked={true}>
               Enable
             </Checkbox>
           </Form.Item>
+
           <Button
             type="primary"
             htmlType="submit"

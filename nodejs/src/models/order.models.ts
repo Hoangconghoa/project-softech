@@ -33,6 +33,14 @@ const OrderDetailsSchema = new Schema<TOrderItems>({
     min: 0,
     max: 70,
   },
+  name: {
+    type: String,
+    maxLength: 500,
+  },
+  thumb: {
+    type: String,
+    maxLength: 500,
+  },
 });
 const actionSchema = new Schema<TActionOrder>(
   {
@@ -87,17 +95,17 @@ const orderSchema = new Schema<IOrder, OrderModelType>(
     orderStatus: {
       type: String,
       enum: [
-        EnumOrderStatus.Pending, //Mới đặt hàng
-        EnumOrderStatus.Confirmed, //Đã xác nhận đơn hàng
-        EnumOrderStatus.Canceled, //Hủy đơn hàng
-        EnumOrderStatus.PrepareShipping, //chuẩn bị giao hàng
-        EnumOrderStatus.Shipping, //đang giao hàng
-        EnumOrderStatus.CancelShipping, //hủy giao hàng
-        EnumOrderStatus.Shipped, //đã giao hàng
-        EnumOrderStatus.PendingPaid, //Chờ thanh toán
-        EnumOrderStatus.Paid, //đã thanh toán
-        EnumOrderStatus.Refund, //hoàn tiền
-        EnumOrderStatus.Finished, //hoàn thành
+        EnumOrderStatus.Pending,
+        EnumOrderStatus.Confirmed,
+        EnumOrderStatus.Canceled,
+        EnumOrderStatus.PrepareShipping,
+        EnumOrderStatus.Shipping,
+        EnumOrderStatus.CancelShipping,
+        EnumOrderStatus.Shipped,
+        EnumOrderStatus.PendingPaid,
+        EnumOrderStatus.Paid,
+        EnumOrderStatus.Refund,
+        EnumOrderStatus.Finished,
       ],
       default: EnumOrderStatus.Pending,
     },

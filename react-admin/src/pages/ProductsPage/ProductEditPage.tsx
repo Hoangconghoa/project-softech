@@ -60,7 +60,7 @@ const ProductEditPage = () => {
   });
 
   const getBrands = async () => {
-    return axiosClient.get(`/v1/brands`);
+    return axiosClient.get(`/v1/brands?page=1&limit=20`);
   };
   //Lấy danh sách về
   const queryBrand = useQuery({

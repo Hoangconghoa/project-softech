@@ -23,14 +23,7 @@ const DashBoardPage = () => {
   const limit = param.get("limit");
   const int_page = page ? parseInt(page) : 1;
   const int_limit = limit ? parseInt(limit) : 10;
-  const getProducts = async (page = 1, limit = 10) => {
-    return axiosClient.get(`/v1/products?page=${page}&limit=${limit}`);
-  };
-  //lấy danh sách
-  const queryProducts = useQuery({
-    queryKey: ["products", int_page, int_limit],
-    queryFn: () => getProducts(int_page, int_limit),
-  });
+
   const fecthCount = async () => {
     return axiosClient.get("/v1/count");
   };
@@ -84,16 +77,6 @@ const DashBoardPage = () => {
         columns={columns}
         dataSource={queryCategory.data?.data.data}
       />
-      <div
-        style={{
-          display: "flex",
-          gap: "565px",
-          marginLeft: "15px",
-        }}
-      >
-        <p>Sum</p>
-        <p>{queryProducts.data?.data.data.totalItems}</p>
-      </div>
     </div>
   );
 };

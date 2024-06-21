@@ -1,17 +1,19 @@
 type TButton = {
   name: string;
   value: string;
+  color: string;
   icon: React.ReactNode; //Dấu ? Có thể không cần truyền icon
 };
 
-const CardInfomation = ({ icon, name, value }: TButton) => {
+const CardInfomation = ({ icon, name, value, color }: TButton) => {
   return (
     <div>
       <div
         style={{
           display: "flex",
           gap: "10px",
-          backgroundColor: "#D1E7DD ",
+          minWidth: "240px",
+          backgroundColor: `${color}`,
           borderRadius: "5px",
           padding: "0px 15px",
         }}
