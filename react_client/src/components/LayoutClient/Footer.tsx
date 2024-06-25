@@ -4,7 +4,7 @@ const Footer = () => {
       <footer className=" bg-gray-900  text-white px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 py-12 lg:py-24">
         <div className="flex flex-col md:flex-row">
           <div className="w-full lg:w-2/6 lg:mx-4 lg:pr-8">
-            <h3 className="font-bold text-2xl">ChemistryPro</h3>
+            <h3 className="font-bold text-2xl">TECHNOLOGY</h3>
             <p className="text-gray-400">
               Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
               nonumy.
@@ -58,7 +58,7 @@ const Footer = () => {
 
           <div className="w-full lg:w-2/6 mt-8 lg:mt-0 lg:mx-4 lg:pr-8">
             <h5 className="uppercase tracking-wider font-semibold text-gray-500">
-              Contact Details
+              Contact TECHNOLOGY
             </h5>
             <ul className="mt-4">
               <li>
@@ -143,7 +143,7 @@ const Footer = () => {
                       <path d="M20,4H4C2.896,4,2,4.896,2,6v12c0,1.104,0.896,2,2,2h16c1.104,0,2-0.896,2-2V6C22,4.896,21.104,4,20,4z M20,8.7l-8,5.334 L4,8.7V6.297l8,5.333l8-5.333V8.7z" />
                     </svg>
                   </span>
-                  <span className="ml-3">dentalpro@example.com</span>
+                  <span className="ml-3">TECHNOLOGY@example.com</span>
                 </a>
               </li>
             </ul>

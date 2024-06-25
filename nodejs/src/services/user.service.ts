@@ -3,10 +3,10 @@ import { ICustomer } from "../types/models";
 import globalConfig from "../constants/config";
 import createError from "http-errors";
 import jwt from "jsonwebtoken";
-const CustomerLogin = async (userbody: { email: string; password: string }) => {
+const CustomerLogin = async (userbody: { phone: string; password: string }) => {
   console.log("2 ==> ", userbody);
   //Tìm xem có tồn tại Customer có email không
-  let user = await Customer.findOne({ email: userbody.email });
+  let user = await Customer.findOne({ phone: userbody.phone });
 
   if (!user) {
     throw createError(401, "Invalid email or password");
@@ -19,7 +19,7 @@ const CustomerLogin = async (userbody: { email: string; password: string }) => {
 
   //Tồn tại thì trả lại thông tin Customer kèm token
   const token = jwt.sign(
-    { _id: user._id, email: user.email },
+    { _id: user._id, phone: user.phone },
     globalConfig.JWT_SECRET as string,
     {
       expiresIn: "7d", // expires in 7days
@@ -27,7 +27,7 @@ const CustomerLogin = async (userbody: { email: string; password: string }) => {
   );
 
   const refreshToken = jwt.sign(
-    { _id: user._id, email: user.email },
+    { _id: user._id, phone: user.phone },
     globalConfig.JWT_SECRET as string,
     {
       expiresIn: "365d", // expires in 24 hours (24 x 60 x 60)
@@ -35,14 +35,14 @@ const CustomerLogin = async (userbody: { email: string; password: string }) => {
   );
 
   return {
-    Customer: { id: user._id, email: user.email },
+    Customer: { id: user._id, phone: user.phone },
     token,
     refreshToken,
   };
 };
 const refreshToken = async (customer: ICustomer) => {
   const refreshToken = jwt.sign(
-    { _id: customer._id, email: customer.email },
+    { _id: customer._id, phone: customer.phone },
     globalConfig.JWT_SECRET as string,
     {
       expiresIn: "7d", // expires in 24 hours (24 x 60 x 60)

@@ -1,5 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
-import { Button, Checkbox, Form, type FormProps, Input, Image } from "antd";
+import { Button, Checkbox, Form, type FormProps, Input } from "antd";
 import useAuth from "../../hooks/useCustomers";
 import {} from "../../../public/images/backround-login.jpg";
 import { message } from "antd";
@@ -8,6 +8,8 @@ type FieldType = {
   password: string;
   phone: string;
   address: string;
+  firstName: string;
+  lastName: string;
   remember?: string;
 };
 
@@ -21,7 +23,9 @@ const LoginPage = () => {
       values.email,
       values.password,
       values.phone,
-      values.address
+      values.address,
+      values.firstName,
+      values.lastName
     );
     console.log(response);
     if (response.isAuthenticated) {
@@ -41,11 +45,9 @@ const LoginPage = () => {
     });
   };
   return (
-    <div>
+    <div className="flex justify-center items-center mt-6">
       {contextHolder}
-      <div className="absolute top-[40%] left-[20%]">
-        <img src="../../../public/images/backround-login.jpg" alt="" />
-      </div>
+
       <Form
         name="basic"
         className="grid grid-cols-1"
@@ -54,9 +56,9 @@ const LoginPage = () => {
         style={{
           maxWidth: 500,
           minWidth: 400,
-          position: "absolute",
-          top: "15%",
-          right: "50px",
+          // position: "absolute",
+          // top: "15%",
+          // right: "50px",
           border: "1px solid black",
           padding: "10px 10px",
         }}
@@ -66,20 +68,28 @@ const LoginPage = () => {
         autoComplete="off"
       >
         <Form.Item<FieldType>
-          className="items-center"
-          wrapperCol={{ offset: 11, span: 16 }}
-        >
-          <Image
-            src="../../../public/images/Logo_dhktdn.png"
-            width={40}
-            height={40}
-          />
-        </Form.Item>
-        <Form.Item<FieldType>
           className="font-bold"
           wrapperCol={{ offset: 10, span: 16 }}
         >
-          REGISTER USER
+          <h1
+            style={{
+              // backgroundColor: "#33B5E6",
+              // padding: "10px 25px",
+              // textTransform: "uppercase",
+              // display: "inline-block",
+              // borderRadius: "15px",
+              // color: "white",
+              fontSize: "25px",
+            }}
+          >
+            Đăng ký
+          </h1>
+        </Form.Item>
+        <Form.Item<FieldType> label="FirstName" name="firstName">
+          <Input />
+        </Form.Item>
+        <Form.Item<FieldType> label="LastName" name="lastName">
+          <Input />
         </Form.Item>
         <Form.Item<FieldType>
           label="Email"
@@ -129,9 +139,16 @@ const LoginPage = () => {
             Đăng nhập
           </Link>
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
-          <Button type="primary" htmlType="submit">
-            Register
+        <Form.Item wrapperCol={{ offset: 6, span: 14 }}>
+          <Button
+            style={{
+              backgroundColor: "red",
+              width: "100%",
+            }}
+            type="primary"
+            htmlType="submit"
+          >
+            Submit
           </Button>
         </Form.Item>
       </Form>

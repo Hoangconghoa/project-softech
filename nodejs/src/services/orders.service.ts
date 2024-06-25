@@ -1,6 +1,7 @@
 import createError from "http-errors";
 import Order from "../models/order.models";
 import { IOrder } from "../types/models";
+import Customer from "../models/customers.model";
 //Tra lai ket qua
 const getAll = async (query: any) => {
   //Phân trang
@@ -14,11 +15,20 @@ const getAll = async (query: any) => {
   //Thêm phần tử vảo object rỗng
   sortObject = { ...sortObject, [sortBy]: sortType };
 
-  //Đếm tổng số record hiện có của collection Product
+  //Đếm tổng số record hiện có của collection Product,
   const count = await Order.countDocuments();
+  let findFilters: any = {};
+  let objectFilters: any = {};
+  if (query && query.customer_id && query.customer_id !== "") {
+    findFilters = { ...findFilters, customer: query.customer_id };
+    objectFilters = { ...objectFilters, customer: query.customer_id };
+  }
 
   //Lấy danh sách khớp với điều kiện cần lấy
-  const orders = await Order.find({})
+  const orders = await Order.find({
+    ...objectFilters,
+  })
+
     .select("-__v")
     //Loại bỏ các trường không cần lấy
     // .populate(
@@ -45,6 +55,7 @@ const getAll = async (query: any) => {
     totalPages: Math.ceil(count / pageSize), //tổng số trang
     totalItems: count, //tổng số records
     filteredCount, //số record khớp điều kiện
+    findFilters,
     sortBy: sortObject,
     orders: orders,
   };

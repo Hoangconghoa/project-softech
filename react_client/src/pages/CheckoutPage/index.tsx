@@ -6,6 +6,7 @@ import useAuth from "../../hooks/useCustomers";
 import { axiosClient } from "../../librarys/axiosClient";
 
 import { message } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 const schema = yup
   .object({
     firstName: yup.string().min(4).max(160).required(),
@@ -33,6 +34,8 @@ const Checkout = () => {
   const { items, total, placeOrder, isLoading, error } = useCartStore();
   const [messageApi, contextHolder] = message.useMessage();
   const { user } = useAuth();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -97,17 +100,33 @@ const Checkout = () => {
     console.log("result", result);
     if (result.ok) {
       reset(); //reset form
+      messageApi.open({
+        type: "success",
+        content: "đơn hàng của bạn đã được đặt",
+      });
+      navigate("/succes");
     }
   };
-
+  const formatCurrency = (amount: any) => {
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(amount);
+  };
   return (
     <>
       {contextHolder}
       {error && <p className="my-5 text-red-500">{error}</p>}
       <div className="flex flex-col items-center border-b bg-white py-4 sm:flex-row sm:px-10 lg:px-20 xl:px-32">
-        <a href="#" className="text-2xl font-bold text-gray-800">
-          sneekpeeks
-        </a>
+        <div className=" logo mx-24">
+          <Link
+            to="/"
+            className="text-gray-500 font-bold text-4xl flex font-sans"
+          >
+            <p className="text-black">TECH</p>
+            <p className="text-blue-700">NOLOGY</p>
+          </Link>
+        </div>
         <div className="mt-4 py-2 text-xs sm:mt-0 sm:ml-auto sm:text-base">
           <div className="relative">
             <ul className="relative flex w-full items-center justify-between space-x-2 sm:space-x-4">
@@ -205,7 +224,9 @@ const Checkout = () => {
                     />
                     <div className="flex w-full flex-col px-4 py-4">
                       <span className="font-semibold">{product.name}</span>
-                      <p className="text-lg font-bold">{product.price}</p>
+                      <p className="text-lg font-bold">
+                        {formatCurrency(product.price)}
+                      </p>
                     </div>
                   </div>
                 );

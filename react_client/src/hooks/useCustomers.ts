@@ -19,7 +19,7 @@ interface Auth {
   isLoading: boolean;
   isAuthenticated: boolean;
   login: (
-    email: string,
+    phone: string,
     password: string
   ) => Promise<{ isAuthenticated: boolean; error: string }>;
   logout: () => void;
@@ -27,7 +27,9 @@ interface Auth {
     email: string,
     password: string,
     phone: string,
-    address: string
+    address: string,
+    firstName: string,
+    lastName: string
   ) => Promise<{ isAuthenticated: boolean; error: string }>;
 }
 
@@ -40,14 +42,14 @@ const useAuth = create(
       },
       isLoading: false, // set trạng thái cho sự kiện login
       isAuthenticated: false, //trạng thái user đã login chưa
-      login: async (email: string, password: string) => {
+      login: async (phone: string, password: string) => {
         try {
           //Khi nhấn nút login thì cập nhật trạng thái loading
           set({ isLoading: true });
 
           //dùng thư viện axiosClient để handle việc check, gửi và lưu token xuống localStorage
           const response = await axiosClient.post("/v1/user/login", {
-            email,
+            phone,
             password,
           });
           console.log("useAuth", response);
@@ -93,7 +95,9 @@ const useAuth = create(
         email: string,
         password: string,
         phone: string,
-        address: string
+        address: string,
+        firstName: string,
+        lastName: string
       ) => {
         try {
           const response = await axiosClient.post("/v1/customers", {
@@ -101,6 +105,8 @@ const useAuth = create(
             password,
             phone,
             address,
+            firstName,
+            lastName,
           });
 
           if (response && response.status === 201) {

@@ -1,10 +1,7 @@
 import createError from "http-errors";
 import Product from "../models/products.model";
-import History from "../models/history.model";
-import historySercice from "./history.sercice";
 import { IProduct } from "../types/models";
 import Category from "../models/categories.model";
-import { ObjectId } from "mongodb";
 //Tra lai ket qua
 const getAll = async (query: any) => {
   //Phân trang
@@ -176,6 +173,7 @@ const getAllClient = async (query: any) => {
   objectFilters = {
     ...objectFilters,
     isActive: true,
+    isHot: true,
     isDelete: false,
   };
 

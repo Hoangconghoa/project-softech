@@ -1,10 +1,10 @@
 import { useNavigate, Link } from "react-router-dom";
-import { Button, Checkbox, Form, type FormProps, Input, Image } from "antd";
+import { Button, Checkbox, Form, type FormProps, Input } from "antd";
 import useAuth from "../../hooks/useCustomers";
 import {} from "../../../public/images/backround-login.jpg";
 import { message } from "antd";
 type FieldType = {
-  email: string;
+  phone: string;
   password: string;
   remember?: string;
 };
@@ -15,14 +15,14 @@ const LoginPage = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     console.log("Success:", values);
-    const response = await login(values.email, values.password);
+    const response = await login(values.phone, values.password);
     console.log(response);
     if (response.isAuthenticated) {
       navigate("/");
     } else {
       messageApi.open({
         type: "error",
-        content: "email hoặc mật khẩu không đúng",
+        content: "sđt hoặc mật khẩu không đúng",
       });
     }
   };
@@ -30,16 +30,14 @@ const LoginPage = () => {
   const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = () => {
     messageApi.open({
       type: "error",
-      content: "email hoặc mật khẩu không đúng",
+      content: "sđt hoặc mật khẩu không đúng",
     });
   };
 
   return (
     <div>
       {contextHolder}
-      <div className="absolute top-[40%] left-[20%]">
-        <img src="../../../public/images/backround-login.jpg" alt="" />
-      </div>
+
       <Form
         name="basic"
         className="grid grid-cols-1"
@@ -60,25 +58,15 @@ const LoginPage = () => {
         autoComplete="off"
       >
         <Form.Item<FieldType>
-          className="items-center"
-          wrapperCol={{ offset: 11, span: 16 }}
-        >
-          <Image
-            src="../../../public/images/Logo_dhktdn.png"
-            width={40}
-            height={40}
-          />
-        </Form.Item>
-        <Form.Item<FieldType>
           className="font-bold"
           wrapperCol={{ offset: 10, span: 16 }}
         >
           LOGIN USER
         </Form.Item>
         <Form.Item<FieldType>
-          label="Email"
-          name="email"
-          rules={[{ required: true, message: "Please input your email!" }]}
+          label="Phone"
+          name="phone"
+          rules={[{ required: true, message: "Please input your phone!" }]}
         >
           <Input />
         </Form.Item>
@@ -108,12 +96,16 @@ const LoginPage = () => {
             Đăng ký
           </Link>
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
+        <Form.Item wrapperCol={{ offset: 6, span: 14 }}>
           <Button
             disabled={isLoading}
             loading={isLoading}
             type="primary"
             htmlType="submit"
+            style={{
+              backgroundColor: "red",
+              width: "100%",
+            }}
           >
             {isLoading ? "Submitting" : "Login"}
           </Button>
