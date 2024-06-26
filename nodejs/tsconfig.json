@@ -8,7 +8,8 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node", "express", "cors"]
   },
   "include": ["src/**/*", "src/server.ts"],
   "exclude": ["node_modules"]
