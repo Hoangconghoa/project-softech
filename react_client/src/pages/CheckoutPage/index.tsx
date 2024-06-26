@@ -25,10 +25,13 @@ interface DataType {
   lastName: string;
   email: string;
   phone: string;
-  shippingAddress: string;
-  shippingYard: string;
-  shippingDistrict: string;
-  shippingProvince: string;
+  address: string;
+  yard: string;
+  district: string;
+  province: string;
+}
+interface Iproduct {
+  stock: number;
 }
 const Checkout = () => {
   const { items, total, placeOrder, isLoading, error } = useCartStore();
@@ -54,23 +57,29 @@ const Checkout = () => {
     const response = await axiosClient.post("/v1/customers", formData);
     return response.data;
   };
+  //lấy giá trị stock hiện tại
+  const fetchStock = async (id: string): Promise<number> => {
+    const response = await axiosClient.get(`/v1/products/${id}`);
+    const stock = parseInt(response.data.data.stock, 10);
+    console.log("respon", stock);
+    return stock;
+  };
 
   const onSubmit = async (data: any) => {
     let userId = user ? user._id : null;
-
+    const customerData: DataType = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      address: data.shippingAddress,
+      yard: data.shippingYard,
+      district: data.shippingDistrict,
+      province: data.shippingProvince,
+    };
+    console.log("id", userId);
     if (!userId) {
       try {
-        const customerData: DataType = {
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email,
-          phone: data.phone,
-          shippingAddress: data.shippingAddress,
-          shippingYard: data.shippingYard,
-          shippingDistrict: data.shippingDistrict,
-          shippingProvince: data.shippingProvince,
-        };
-
         const customer = await fetchCreate(customerData);
         userId = customer.data._id;
         console.log(userId);
@@ -82,6 +91,13 @@ const Checkout = () => {
         });
         return;
       }
+    } else {
+      const response = await axiosClient.put(
+        `/v1/customers/${user?._id}`,
+        customerData
+      );
+
+      console.log("update", response.data);
     }
 
     const payload = {
@@ -97,9 +113,22 @@ const Checkout = () => {
     };
 
     const result = await placeOrder(payload);
-    console.log("result", result);
+    console.log("result", result.message);
     if (result.ok) {
       reset(); //reset form
+      //khi đặt hàng thành công thì trừ số lượng của sản phẩm đó đi
+      payload.orderItems.map(async (item) => {
+        const stock = await fetchStock(item.product);
+        const ProductUpdate: Iproduct = {
+          stock: stock - item.quantity,
+        };
+        console.log("updatepro", ProductUpdate);
+        const response = await axiosClient.put(
+          `/v1/products/${item.product}`,
+          ProductUpdate
+        );
+        console.log("updatepro", response.data);
+      });
       messageApi.open({
         type: "success",
         content: "đơn hàng của bạn đã được đặt",

@@ -144,7 +144,11 @@ const OrderDetailsPage = () => {
   ];
   return (
     <div>
-      <div>Oder Details: #{id} </div>
+      <div
+        style={{ fontWeight: "bold", fontSize: "18px", marginBottom: "10px" }}
+      >
+        Oder Details: <a href="">#{id} </a>
+      </div>
       <div
         style={{
           display: "flex",
@@ -161,7 +165,11 @@ const OrderDetailsPage = () => {
         <CardInfomation
           icon={<ContactsTwoTone style={{ fontSize: "30px" }} />}
           name="Name"
-          value="hoa"
+          value={
+            queryCustomer.data?.data.data.firstName +
+            " " +
+            queryCustomer.data?.data.data.lastName
+          }
           color="#F8D7DA"
         />
         <CardInfomation

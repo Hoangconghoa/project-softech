@@ -12,9 +12,9 @@ const UserInfo = () => {
         <Space wrap size={16}>
           <Avatar size="small" icon={<UserOutlined />} />
           <strong className="">{user.email}</strong>
-          <span className="cursor-pointer" onClick={logout}>
+          <Link to={"/login"} className="cursor-pointer" onClick={logout}>
             Đăng xuất
-          </span>
+          </Link>
         </Space>
       ) : (
         <Space wrap size={40}>

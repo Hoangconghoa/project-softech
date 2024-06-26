@@ -7,9 +7,6 @@ type FieldType = {
   email: string;
   password: string;
   phone: string;
-  address: string;
-  firstName: string;
-  lastName: string;
   remember?: string;
 };
 
@@ -22,10 +19,7 @@ const LoginPage = () => {
     const response = await register(
       values.email,
       values.password,
-      values.phone,
-      values.address,
-      values.firstName,
-      values.lastName
+      values.phone
     );
     console.log(response);
     if (response.isAuthenticated) {
@@ -85,12 +79,7 @@ const LoginPage = () => {
             Đăng ký
           </h1>
         </Form.Item>
-        <Form.Item<FieldType> label="FirstName" name="firstName">
-          <Input />
-        </Form.Item>
-        <Form.Item<FieldType> label="LastName" name="lastName">
-          <Input />
-        </Form.Item>
+
         <Form.Item<FieldType>
           label="Email"
           name="email"
@@ -106,15 +95,6 @@ const LoginPage = () => {
         >
           <Input />
         </Form.Item>
-
-        <Form.Item<FieldType>
-          label="Address"
-          name="address"
-          rules={[{ required: true, message: "Please input your Address!" }]}
-        >
-          <Input />
-        </Form.Item>
-
         <Form.Item<FieldType>
           label="Password"
           name="password"

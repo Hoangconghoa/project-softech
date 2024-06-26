@@ -4,6 +4,7 @@ import { BiArrowBack } from "react-icons/bi";
 import { axiosClient } from "../../librarys/axiosClient";
 import useAuth from "../../hooks/useCustomers";
 import { Result } from "antd";
+import { Link } from "react-router-dom";
 const OrderPage = () => {
   const [status, setStatus] = useState<string>("pending");
   const [dataList, setDataList] = useState<any[]>([]);
@@ -29,11 +30,14 @@ const OrderPage = () => {
   const datalength = dataList.length;
   console.log("order", datalength);
   return (
-    <div>
-      <div className="my-5 ml-3">
-        <button>
-          <BiArrowBack />
-        </button>
+    <div className="p-5">
+      <div className="flex items-center gap-10 mb-5">
+        <Link to={"/"}>
+          <button>
+            <BiArrowBack />
+          </button>
+        </Link>
+        <h1 className="text-center">Đơn hàng của bạn</h1>
       </div>
       <div className="flex justify-between items-center">
         <button
@@ -71,7 +75,7 @@ const OrderPage = () => {
       </div>
       <div>
         {datalength > 0 ? (
-          <div>
+          <div className="border p-2 my-1 mb-2">
             {dataList.map((c: any) => {
               return (
                 <div key={c._id}>
@@ -82,7 +86,7 @@ const OrderPage = () => {
                     return (
                       <div
                         key={product.product}
-                        className="flex gap-3 mx-10 mt-10"
+                        className="flex gap-3 mx-10 mt-5 items-center"
                       >
                         <img
                           src={product.thumb}
@@ -99,16 +103,10 @@ const OrderPage = () => {
             })}
           </div>
         ) : (
-          <Result
-            title="Bạn chưa có đơn hàng nào ở đây"
-            // extra={
-            //   <Button type="primary" key="console">
-            //     Back
-            //   </Button>
-            // }
-          />
+          <Result title="Bạn chưa có đơn hàng nào ở đây" />
         )}
       </div>
+      <hr />
     </div>
   );
 };

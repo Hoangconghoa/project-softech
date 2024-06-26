@@ -55,9 +55,16 @@ const ProductDetail = () => {
     <div className="bg-white p-10">
       <h1 className="text-[30px] font-bold">{productDetail?.productName}</h1>
       <div className="text-green-500 ">
-        Tình trạng :
-        {productDetail && productDetail?.stock > 0 ? "còn hàng" : "hết hàng"}
+        Tình trạng:
+        {productDetail && productDetail?.stock > 0 ? " còn hàng" : " hết hàng"}
       </div>
+      {productDetail && productDetail?.stock > 0 ? (
+        <span className="text-green-500 ">
+          Số lượng: {productDetail?.stock}
+        </span>
+      ) : (
+        <span className="text-red-500">Số lượng: {productDetail?.stock}</span>
+      )}
       <hr className="my-10" />
       <div className="flex">
         <div className="img w-[50%]">
@@ -68,7 +75,7 @@ const ProductDetail = () => {
             height={500}
           />
         </div>
-        <div>
+        <div className="w-[30%]">
           <h1>{productDetail?.description}</h1>
           Giá bán:
           <span className="text-red-500 font-bold text-[25px]">

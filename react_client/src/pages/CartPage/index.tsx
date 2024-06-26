@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useCartStore } from "../../hooks/useCartStore";
 import { GoChevronDown } from "react-icons/go";
 import { FaDeleteLeft } from "react-icons/fa6";
@@ -16,7 +16,7 @@ const CartPage = () => {
   return (
     <div className="h-[220vh] bg-gray-100 ">
       <div className="bg-gray-100 h-screen py-8">
-        <div className="ButtonHome">
+        <div className="ButtonHome flex justify-between">
           <button
             onClick={() => {
               navigate("/");
@@ -25,6 +25,11 @@ const CartPage = () => {
           >
             BackToShop
           </button>
+          <Link to="/order">
+            <button className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4">
+              Đơn hàng đã đặt
+            </button>
+          </Link>
         </div>
         <div className="container mx-auto px-4">
           <div className="mb-[20px]">

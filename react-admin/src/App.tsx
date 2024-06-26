@@ -17,6 +17,7 @@ import ProductWithCategories from "./pages/CategoriesPage/ProductWithCategories"
 import OrdersPage from "./pages/OrdersPage";
 import OrderAddPage from "./pages/OrdersPage/OrderAddPage";
 import OrderDetailsPage from "./pages/OrdersPage/OrderDetailsPage";
+import PrivateRoute from "./PrivateRoute";
 // import UpdateProduct from "./pages/ProductsPage/UpdateProduct";
 
 const queryClient = new QueryClient();
@@ -28,7 +29,14 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<LayoutAdmin />}>
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <LayoutAdmin />
+                </PrivateRoute>
+              }
+            >
               <Route index element={<DashBoardPage />} />
               <Route path="/products" element={<ProductsPage />} />
               <Route path="/orders" element={<OrdersPage />} />

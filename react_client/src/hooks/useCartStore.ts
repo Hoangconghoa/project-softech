@@ -121,7 +121,7 @@ export const useCartStore = create(
               - show message loi
             */
 
-          if (data.statusCode === 201) {
+          if (data.statusCode === 200) {
             //Reset state
             set({
               isLoading: false,

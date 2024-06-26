@@ -26,10 +26,7 @@ interface Auth {
   register: (
     email: string,
     password: string,
-    phone: string,
-    address: string,
-    firstName: string,
-    lastName: string
+    phone: string
   ) => Promise<{ isAuthenticated: boolean; error: string }>;
 }
 
@@ -91,22 +88,12 @@ const useAuth = create(
         localStorage.removeItem("token");
         localStorage.removeItem("refreshToken");
       },
-      register: async (
-        email: string,
-        password: string,
-        phone: string,
-        address: string,
-        firstName: string,
-        lastName: string
-      ) => {
+      register: async (email: string, password: string, phone: string) => {
         try {
           const response = await axiosClient.post("/v1/customers", {
             email,
             password,
             phone,
-            address,
-            firstName,
-            lastName,
           });
 
           if (response && response.status === 201) {
