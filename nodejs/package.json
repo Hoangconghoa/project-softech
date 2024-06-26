@@ -5,9 +5,10 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start": "ts-node src/server.ts",
+    "start": "ts-node dist/server.ts",
     "seed": "ts-node-dev src/seeds/faker.db.ts",
     "demo": "ts-node-dev src/seeds/test.ts",
+    "production": "npm run build && cross-env BUILD_MODE=production node ./dist/server.ts",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
   },
   "dependencies": {

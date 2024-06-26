@@ -15,7 +15,7 @@ const Products = ({ productName, price, thumbnail, slug }: DataType) => {
     }).format(amount);
   };
   return (
-    <div className="cursor-pointer bg-white lg:w-[225px] h-[400px] px-[10px] py-[15px]">
+    <div className="cursor-pointer bg-white lg:w-[225px] h-[400px] px-[10px] py-[15px] transform transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg">
       <Link to={`/products/${slug}`}>
         <div className="flex items-center justify-center h-[60%]">
           <img src={thumbnail} alt={productName} width={200} height={250} />

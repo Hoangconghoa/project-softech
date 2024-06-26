@@ -69,7 +69,7 @@ const Header = () => {
               <p>|</p>
               <li>
                 {" "}
-                <DropdownMenu label="USD" items={menuExchange} />{" "}
+                <DropdownMenu label="VND" items={menuExchange} />{" "}
               </li>
               <p>|</p>
               <li className="flex justify-center items-center gap-1 ">
@@ -142,14 +142,19 @@ const Header = () => {
         {/* Thanh menu */}
         <nav className="w-full bg-blue-700 shadow-lg px-6 py-5 pt-7  text-center">
           <ul className="flex justify-evenly text-base text-white font-bold uppercase items-center">
-            <li className="flex justify-center items-center gap-2">
-              <FaHome />
-              <Link to={`/`}>HOME</Link>
+            <li>
+              <Link className="flex justify-center items-center gap-2" to={`/`}>
+                <FaHome />
+                HOME
+              </Link>
             </li>
             {dataCategory &&
               dataCategory.map((c) => {
                 return (
-                  <li key={c._id}>
+                  <li
+                    className=" hover:bg-gray-200 active:bg-gray-400 "
+                    key={c._id}
+                  >
                     <Link to={`/category/${c._id}`}>{c.categoryName}</Link>
                   </li>
                 );

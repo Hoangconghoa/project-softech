@@ -146,7 +146,7 @@ const CategoriesPage = () => {
 
   //CRAETE
   const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
-  const [updateFormCreate] = Form.useForm();
+  const [updateFormCreate] = Form.useForm(); //sử dụng useForm trong antd
   const showModalCreate = () => {
     setIsModalCreateOpen(true);
   };
@@ -165,7 +165,7 @@ const CategoriesPage = () => {
   const fetchCreate = async (formData: DataType) => {
     return axiosClient.post("/v1/categories", formData);
   };
-
+  //hàm tạo mới
   const mutationCreate = useMutation({
     mutationFn: fetchCreate,
     onSuccess: () => {

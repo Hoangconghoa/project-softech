@@ -45,11 +45,11 @@ const ProductPage = () => {
   // console.log("dataa", products.data);
   return (
     <>
-      <p className="bg-[#c8191f] uppercase rounded-tl-lg rounded-tr-lg text-[20px] px-[10px] py-[5px] text-white inline-block">
+      <p className="bg-[#c8191f] ml-10 uppercase rounded-tl-lg rounded-tr-lg text-[20px] px-[10px] py-[5px] text-white inline-block">
         {dataProducts && dataProducts[0].category.categoryName}
       </p>
       <hr className="text-[#c8191f]" />
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 justify-items-center items-center">
         {dataProducts &&
           dataProducts.map((c) => {
             return (

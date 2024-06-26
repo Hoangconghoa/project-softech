@@ -83,7 +83,7 @@ const HomePage = () => {
         />
       </div>
       <div className="mt-5">
-        <h1 className="bg-[#c8191f] rounded-tl-lg rounded-tr-lg text-[20px] px-[10px] py-[5px] text-white w-[120px]">
+        <h1 className="bg-[#c8191f] rounded-tl-lg rounded-tr-lg text-[20px] ml-12 px-[10px] py-[5px] text-white w-[120px]">
           HOT DEAL
         </h1>
         <hr className="text-[#c8191f]" />
@@ -97,7 +97,7 @@ const HomePage = () => {
             dataProducts.map((c) => {
               return (
                 <SwiperSlide key={c._id}>
-                  <div className="product_details flex">
+                  <div className="product_details flex justify-center items-center">
                     <Products
                       productName={c.productName}
                       price={c.price}
