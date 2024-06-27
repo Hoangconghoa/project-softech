@@ -78,7 +78,7 @@ const ProductAddPage = () => {
         type: "success",
         content: "Create success !",
       });
-      // Làm tươi lại danh sách danh mục dựa trên key đã định nghĩa
+      // Làm mới lại danh sách danh mục dựa trên key đã định nghĩa
       queryClient.invalidateQueries({
         queryKey: ["products"],
       });

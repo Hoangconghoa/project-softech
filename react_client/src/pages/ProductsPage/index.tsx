@@ -21,6 +21,7 @@ interface DataType {
   isHome?: boolean;
   createAt: string;
 }
+// Lấy id phân loại SP
 const ProductPage = () => {
   const [dataProducts, setDataProducts] = useState<DataType[]>();
   const params = useParams();

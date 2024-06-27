@@ -53,7 +53,7 @@ const ProductEditPage = () => {
   const getCategories = async () => {
     return axiosClient.get(`/v1/categories`);
   };
-  //Lấy danh sách về
+  //Lấy danh sách categories về
   const queryCategory = useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,
@@ -62,7 +62,7 @@ const ProductEditPage = () => {
   const getBrands = async () => {
     return axiosClient.get(`/v1/brands?page=1&limit=20`);
   };
-  //Lấy danh sách về
+  //Lấy danh sách brands về
   const queryBrand = useQuery({
     queryKey: ["brands"],
     queryFn: getBrands,
@@ -97,7 +97,7 @@ const ProductEditPage = () => {
         type: "success",
         content: "Update success !",
       });
-      // Làm tươi lại danh sách danh mục dựa trên key đã định nghĩa
+      // Làm mới lại danh sách danh mục dựa trên key đã định nghĩa
       queryClient.invalidateQueries({
         queryKey: ["products"],
       });

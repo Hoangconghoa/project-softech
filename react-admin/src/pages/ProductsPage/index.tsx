@@ -26,7 +26,7 @@ const ProductsPage = () => {
   const [param] = useSearchParams();
   const page = param.get("page");
   const limit = param.get("limit");
-  //phân trang
+  //Phân trang
   const [int_page, setInt_page] = useState(page ? parseInt(page) : 1);
   const [int_limit, setInt_limit] = useState(limit ? parseInt(limit) : 10);
   // const int_page = page ? parseInt(page) : 1;
@@ -34,7 +34,7 @@ const ProductsPage = () => {
   const getProducts = async (page = 1, limit = 10) => {
     return axiosClient.get(`/v1/products?page=${page}&limit=${limit}`);
   };
-  //lấy danh sách
+  //Lấy tất cả các sản phẩm ra
   const queryProducts = useQuery({
     queryKey: ["products", int_page, int_limit],
     queryFn: () => getProducts(int_page, int_limit),
@@ -58,7 +58,7 @@ const ProductsPage = () => {
         type: "success",
         content: "Delete success !",
       });
-      // Làm tươi lại danh sách danh mục dựa trên key đã định nghĩa
+      // Làm mới lại danh sách danh mục dựa trên key đã định nghĩa
       queryClient.invalidateQueries({
         queryKey: ["products", int_page, int_limit],
       });
