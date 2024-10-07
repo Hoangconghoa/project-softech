@@ -21,12 +21,7 @@ interface DataType {
   isHome?: boolean;
   createAt: string;
 }
-<<<<<<< Updated upstream:react_client/src/pages/ProductsPage/index.tsx
-// Lấy id phân loại SP
-const ProductPage = () => {
-=======
 const Category = () => {
->>>>>>> Stashed changes:react_client/src/pages/ProductsPage/Categories.tsx
   const [dataProducts, setDataProducts] = useState<DataType[]>();
 
   const params = useParams();
