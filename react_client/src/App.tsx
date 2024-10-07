@@ -4,13 +4,13 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import Register from "./pages/RegisterPage/Register";
 import NoPage from "./pages/NoPage";
 import HomePage from "./pages/HomePage";
-import ProductPage from "./pages/ProductsPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import CartPage from "./pages/CartPage";
 import Checkout from "./pages/CheckoutPage";
 import ProductDetail from "./pages/ProductsPage/ProductDetail";
 import Successfully from "./pages/Successfully";
 import OrderPage from "./pages/OrderPage";
+import Category from "./pages/ProductsPage/Categories";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -23,7 +23,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<LayoutClient />}>
               <Route index element={<HomePage />} />
-              <Route path="/category/:id" element={<ProductPage />} />
+              <Route path="/category/:id" element={<Category />} />
               <Route path="/products/:slug" element={<ProductDetail />} />
               {/* <Route path="products/:slug" element={<ProductDetailsPage />} /> */}
             </Route>

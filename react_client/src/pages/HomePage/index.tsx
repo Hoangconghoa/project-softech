@@ -2,19 +2,14 @@
 import { useEffect, useState } from "react";
 import SwiperGallery from "../../components/Swiper/SwiperGallery";
 import Support from "../../components/support/support";
-
 import { GoRocket } from "react-icons/go";
 import { IoReload } from "react-icons/io5";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-
-// import required modules
-import { Navigation } from "swiper/modules";
 import { MdOutlinePayment, MdOutlineSupportAgent } from "react-icons/md";
 import globalConfigs from "../../constants/config";
 import axios from "axios";
-import Products from "../../components/ui/Products";
+import HotSale from "../ProductsPage/HotSale";
+import ProductPage from "../ProductsPage/ProductPage";
+
 interface DataType {
   _id?: string;
   productName: string;
@@ -82,33 +77,11 @@ const HomePage = () => {
           title="Dedicated support"
         />
       </div>
-      <div className="mt-5">
-        <h1 className="bg-[#c8191f] rounded-tl-lg rounded-tr-lg text-[20px] ml-12 px-[10px] py-[5px] text-white w-[120px]">
-          HOT DEAL
-        </h1>
-        <hr className="text-[#c8191f]" />
-        <Swiper
-          navigation={true}
-          slidesPerView={4}
-          modules={[Navigation]}
-          className="mySwiper"
-        >
-          {dataProducts &&
-            dataProducts.map((c) => {
-              return (
-                <SwiperSlide key={c._id}>
-                  <div className="product_details flex justify-center items-center">
-                    <Products
-                      productName={c.productName}
-                      price={c.price}
-                      thumbnail={c.thumbnail}
-                      slug={c.slug}
-                    />
-                  </div>
-                </SwiperSlide>
-              );
-            })}
-        </Swiper>
+      <div className="mx-10">
+        <HotSale />
+      </div>
+      <div className="my-10">
+        <ProductPage />
       </div>
     </div>
   );

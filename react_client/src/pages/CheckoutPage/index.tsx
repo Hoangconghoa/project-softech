@@ -104,7 +104,12 @@ const Checkout = () => {
       customer: {
         _id: userId,
       },
-
+      customerName: data.lastName,
+      customerMobile: data.phone,
+      shippingAddress: data.shippingAddress,
+      shippingYard: data.shippingYard,
+      shippingDistrict: data.shippingDistrict,
+      shippingProvince: data.shippingProvince,
       // Sản phẩm của đơn hàng
       orderItems: items,
       //Các trường khác của đơn hàng

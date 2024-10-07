@@ -21,9 +21,14 @@ interface DataType {
   isHome?: boolean;
   createAt: string;
 }
+<<<<<<< Updated upstream:react_client/src/pages/ProductsPage/index.tsx
 // Lấy id phân loại SP
 const ProductPage = () => {
+=======
+const Category = () => {
+>>>>>>> Stashed changes:react_client/src/pages/ProductsPage/Categories.tsx
   const [dataProducts, setDataProducts] = useState<DataType[]>();
+
   const params = useParams();
   const { id } = params;
   console.log(id);
@@ -31,7 +36,7 @@ const ProductPage = () => {
     try {
       const featchData = async () => {
         const response = await axios.get(
-          globalConfigs.urlAPI + `/v1/products?cat_id=${id}`
+          globalConfigs.urlAPI + `/v1/products/client/getall?cat_id=${id}`
         );
         setDataProducts(response.data.data.products);
         // console.log("Data", response.data.data.products);
@@ -46,11 +51,11 @@ const ProductPage = () => {
   // console.log("dataa", products.data);
   return (
     <>
-      <p className="bg-[#c8191f] ml-10 uppercase rounded-tl-lg rounded-tr-lg text-[20px] px-[10px] py-[5px] text-white inline-block">
+      <p className="bg-[#c8191f] uppercase rounded-tl-lg rounded-tr-lg text-[20px] px-[10px] py-[5px] text-white inline-block">
         {dataProducts && dataProducts[0].category.categoryName}
       </p>
       <hr className="text-[#c8191f]" />
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 justify-items-center items-center">
+      <div className="grid grid-cols-2  sm:grid-cols-3 md:grid-cols-5 gap-4 justify-items-center items-center">
         {dataProducts &&
           dataProducts.map((c) => {
             return (
@@ -69,4 +74,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default Category;

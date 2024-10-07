@@ -11,12 +11,14 @@ import routerBrand from "./routes/v1/brands.route";
 import routerCount from "./routes/v1/count.route";
 import routerHistory from "./routes/v1/history.route";
 import cors from "cors";
+import path from "path";
 const app: Express = express();
 app.use(cors({ origin: "*" }));
 
 //order
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
 app.use("/api/v1/orders", routerOrder);
 app.use("/api/v1/upload", routerUpload);
 app.use("/api/v1/customers", routerCustomer);
@@ -27,4 +29,5 @@ app.use("/api/v1/historys", routerHistory);
 app.use("/api/v1/categories", routerCategory);
 app.use("/api/v1/brands", routerBrand);
 app.use("/api/v1/count", routerCount);
+
 export default app;

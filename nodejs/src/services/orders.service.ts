@@ -19,9 +19,12 @@ const getAll = async (query: any) => {
   const count = await Order.countDocuments();
   let findFilters: any = {};
   let objectFilters: any = {};
-  if (query && query.customer_id && query.customer_id !== "") {
-    findFilters = { ...findFilters, customer: query.customer_id };
-    objectFilters = { ...objectFilters, customer: query.customer_id };
+  if (query?.customer) {
+    findFilters = { ...findFilters, customer: query.customer };
+    objectFilters = {
+      ...objectFilters,
+      customerMobile: { $regex: query.customer, $options: "i" },
+    };
   }
 
   //Lấy danh sách khớp với điều kiện cần lấy
@@ -30,18 +33,7 @@ const getAll = async (query: any) => {
   })
 
     .select("-__v")
-    //Loại bỏ các trường không cần lấy
-    // .populate(
-    //   "customer",
-    //   "-__v -isEmailVerified -sort -isActive -createdAt -updatedAt"
-    // )
-    // .populate(
-    //   "staff",
-    //   "-__v -isEmailVerified -password -role -sort -isActive -createdAt -updatedAt"
-    // )
-    //Nối quan hệ giữa product trong OrderItem với model Product
-    //Chỉ lấy những trường cần lấy
-    // .populate("orderItems.product", "_id productName slug thumbnail")
+
     .sort(sortObject)
     .skip((currentPage - 1) * pageSize)
     .limit(pageSize);
