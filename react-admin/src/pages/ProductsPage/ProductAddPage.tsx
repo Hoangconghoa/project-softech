@@ -3,7 +3,6 @@ import {
   Checkbox,
   Input,
   InputNumber,
-  type FormProps,
   Select,
   Button,
   message,
@@ -14,42 +13,20 @@ import {
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosClient } from "../../librarys/AxiosClient";
 import { useNavigate } from "react-router-dom";
-
+import { TypeProduct } from "../../components/data/type";
 import globalConfig from "../../constants/config";
 import { UploadOutlined } from "@ant-design/icons";
 import { AnyObject } from "antd/es/_util/type";
 
-interface DataType {
-  _id?: string;
-  productName: string;
-  category: string;
-  brandId: string;
-  price: number;
-  sort: number;
-  isActive: boolean;
-  description?: string;
-  discount: number;
-  stock: number;
-  modelYear: number;
-  thumbnail?: string;
-  slug: string;
-  isHome?: boolean;
-  createAt: string;
-  isHot?: boolean;
-  isBest?: boolean;
-}
-
 const ProductAddPage = () => {
   const [messageApi, contextHolder] = message.useMessage();
-
   const navigate = useNavigate();
-
   const [updateFormEdit] = Form.useForm();
 
   const getCategories = async () => {
     return axiosClient.get(`/v1/categories`);
   };
-  //Lấy danh sách về
+
   const queryCategory = useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,
@@ -58,14 +35,14 @@ const ProductAddPage = () => {
   const getBrands = async () => {
     return await axiosClient.get(`/v1/brands?page=1&limit=20`);
   };
-  //Lấy danh sách về
+
   const queryBrand = useQuery({
     queryKey: ["brands"],
     queryFn: getBrands,
   });
 
   const queryClient = useQueryClient();
-  const fetchCreate = async (formData: DataType) => {
+  const fetchCreate = async (formData: TypeProduct) => {
     console.log(formData);
     return axiosClient.post("/v1/products", formData);
   };
@@ -78,15 +55,16 @@ const ProductAddPage = () => {
         type: "success",
         content: "Create success !",
       });
+<<<<<<< Updated upstream
       // Làm mới lại danh sách danh mục dựa trên key đã định nghĩa
+=======
+>>>>>>> Stashed changes
       queryClient.invalidateQueries({
         queryKey: ["products"],
       });
-      //
       updateFormEdit.resetFields();
     },
     onError: () => {
-      //khi gọi API bị lỗi
       messageApi.open({
         type: "error",
         content: "Create error !",
@@ -94,13 +72,27 @@ const ProductAddPage = () => {
     },
   });
 
-  const onFinish: FormProps<DataType>["onFinish"] = (values) => {
+  const onFinish = (values: TypeProduct) => {
     console.log("Success:", values);
     mutationCreate.mutate(values);
   };
 
-  const onFinishFailed: FormProps<DataType>["onFinishFailed"] = (errorInfo) => {
+  const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
+  };
+
+  const handleProductNameChange = (e: any) => {
+    const value = e.target.value;
+    const slugValue = value
+      .toLowerCase()
+      .replace(/ /g, "-")
+      .replace(/[^\w-]+/g, "");
+
+    updateFormEdit.setFieldsValue({ slug: slugValue });
+  };
+
+  const FormatNumber = (value: any) => {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   };
 
   return (
@@ -128,12 +120,18 @@ const ProductAddPage = () => {
         name="create-form"
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 20 }}
-        initialValues={{ remember: true }}
+        initialValues={{
+          price: 0,
+          discount: 0,
+          stock: 0,
+          sort: 50,
+          isActive: true,
+        }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item<DataType>
+        <Form.Item<TypeProduct>
           label="Product Name"
           name="productName"
           rules={[
@@ -141,9 +139,9 @@ const ProductAddPage = () => {
             { min: 4, message: "Tối thiểu 4 kí tự" },
           ]}
         >
-          <Input />
+          <Input onChange={handleProductNameChange} />
         </Form.Item>
-        <Form.Item<DataType>
+        <Form.Item<TypeProduct>
           label="URL SEO"
           name="slug"
           rules={[
@@ -153,7 +151,7 @@ const ProductAddPage = () => {
         >
           <Input />
         </Form.Item>
-        <Form.Item<DataType>
+        <Form.Item<TypeProduct>
           label="Category"
           name="category"
           rules={[
@@ -174,8 +172,7 @@ const ProductAddPage = () => {
             }
           />
         </Form.Item>
-
-        <Form.Item<DataType>
+        <Form.Item<TypeProduct>
           label="Brand"
           name="brandId"
           rules={[{ required: true, message: "Please input product Brand!" }]}
@@ -194,13 +191,12 @@ const ProductAddPage = () => {
             }
           />
         </Form.Item>
-
-        <Form.Item<DataType>
+        <Form.Item<TypeProduct>
           hasFeedback
           label="Price"
           name="price"
           rules={[
-            { required: false, message: "Please Price" },
+            { required: true, message: "Please input price" },
             {
               type: "number",
               min: 0,
@@ -208,15 +204,19 @@ const ProductAddPage = () => {
             },
           ]}
         >
-          <InputNumber min={0} defaultValue={0} />
+          <InputNumber
+            formatter={(value) => FormatNumber(value)}
+            parser={(value: any) => value.replace(/\./g, "")}
+            min={0}
+            style={{ width: "20%" }}
+          />
         </Form.Item>
-
-        <Form.Item<DataType>
+        <Form.Item<TypeProduct>
           hasFeedback
           label="Discount"
           name="discount"
           rules={[
-            { required: false, message: "Please discount" },
+            { required: false, message: "Please input discount" },
             {
               type: "number",
               min: 0,
@@ -224,39 +224,25 @@ const ProductAddPage = () => {
             },
           ]}
         >
-          <InputNumber min={0} defaultValue={0} />
+          <InputNumber
+            min={0}
+            formatter={(value) => `${value}%`}
+            parser={(value: any) => value.replace("%", "")}
+          />
         </Form.Item>
-
-        <Form.Item<DataType>
-          hasFeedback
-          label="Quantity"
-          name="stock"
-          rules={[
-            { required: false, message: "Please Stock" },
-            {
-              type: "number",
-              min: 0,
-              message: "Tối thiểu phải là 0",
-            },
-          ]}
-        >
-          <InputNumber min={0} defaultValue={0} />
-        </Form.Item>
-
-        <Form.Item<DataType>
+        <Form.Item<TypeProduct>
           label="Description"
           name="description"
           rules={[{ max: 500, message: "Tối đa 500 kí tự" }]}
         >
           <Input.TextArea />
         </Form.Item>
-
-        <Form.Item<DataType>
+        <Form.Item<TypeProduct>
           hasFeedback
           label="Sort"
           name="sort"
           rules={[
-            { required: false, message: "Please sort" },
+            { required: false, message: "Please input sort" },
             {
               type: "number",
               min: 1,
@@ -264,10 +250,9 @@ const ProductAddPage = () => {
             },
           ]}
         >
-          <InputNumber min={0} defaultValue={50} />
+          <InputNumber min={1} />
         </Form.Item>
-
-        <Form.Item<DataType> label="Thumbnail" name="thumbnail">
+        <Form.Item<TypeProduct> label="Thumbnail" name="thumbnail">
           <Input />
         </Form.Item>
         <Row style={{ margin: "20px 0" }}>
@@ -277,7 +262,6 @@ const ProductAddPage = () => {
               listType="picture"
               onChange={(file) => {
                 console.log(file, file.file.status);
-                /** Upload thành công thì cập nhật lại giá trị input thumbnail */
                 if (file.file.status === "done") {
                   updateFormEdit.setFieldValue(
                     "thumbnail",
@@ -287,35 +271,25 @@ const ProductAddPage = () => {
               }}
               onRemove={(file) => {
                 console.log(file);
-                /** Khi xóa hình thì clear giá trị khỏi input */
                 updateFormEdit.setFieldValue("thumbnail", null);
-                /** Đồng thời gọi API xóa link hình trên server, dựa vào đường dẫn */
               }}
             >
               <Button icon={<UploadOutlined />}>Upload</Button>
             </Upload>
           </Col>
         </Row>
-
         <Form.Item wrapperCol={{ offset: 4, span: 20 }}>
           <Form.Item name="isHome" valuePropName="checked">
-            <Checkbox>is Home</Checkbox>
+            <Checkbox>Hiển thị ở trang chủ</Checkbox>
           </Form.Item>
-
           <Form.Item name="isHot" valuePropName="checked">
-            <Checkbox>is Hot</Checkbox>
+            <Checkbox>Sản phẩm HotDeal</Checkbox>
           </Form.Item>
-
-          <Form.Item name="isBest" valuePropName="checked">
-            <Checkbox>is Bet</Checkbox>
-          </Form.Item>
-
           <Form.Item name="isActive" valuePropName="checked">
             <Checkbox checked={true} defaultChecked={true}>
               Enable
             </Checkbox>
           </Form.Item>
-
           <Button
             type="primary"
             htmlType="submit"

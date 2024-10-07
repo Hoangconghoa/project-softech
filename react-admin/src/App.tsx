@@ -25,7 +25,6 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <>
-      {/* <LayoutAdmin /> */}
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Routes>

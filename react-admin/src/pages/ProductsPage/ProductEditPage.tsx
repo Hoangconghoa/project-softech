@@ -4,7 +4,6 @@ import {
   Input,
   InputNumber,
   type FormProps,
-  //   type UploadProps,
   Select,
   Button,
   message,
@@ -18,34 +17,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { UploadOutlined } from "@ant-design/icons";
 import globalConfig from "../../constants/config";
 import { AnyObject } from "antd/es/_util/type";
-// import { useState } from "react";
-// import type { UploadFile } from "antd";
-
-interface DataType {
-  _id?: string;
-  productName: string;
-  category: string;
-  brandId: string;
-  price: number;
-  sort: number;
-  isActive: boolean;
-  description?: string;
-  discount: number;
-  stock: number;
-  modelYear: number;
-  thumbnail?: string;
-  slug: string;
-  isHome?: boolean;
-}
-
+import { TypeProduct } from "../../components/data/type";
 const ProductEditPage = () => {
   const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
   const [updateFormEdit] = Form.useForm();
-
-  //   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  //   const [uploading, setUploading] = useState(false);
-
   const params = useParams();
 
   const { id } = params;
@@ -85,7 +61,7 @@ const ProductEditPage = () => {
   updateFormEdit.setFieldsValue(productData);
 
   const queryClient = useQueryClient();
-  const fetchUpdate = async (formData: DataType) => {
+  const fetchUpdate = async (formData: TypeProduct) => {
     return axiosClient.put(`/v1/products/${id}`, formData);
   };
 
@@ -111,12 +87,14 @@ const ProductEditPage = () => {
     },
   });
 
-  const onFinish: FormProps<DataType>["onFinish"] = (values) => {
+  const onFinish: FormProps<TypeProduct>["onFinish"] = (values) => {
     console.log("Success:", values);
     mutationUpdate.mutate(values);
   };
 
-  const onFinishFailed: FormProps<DataType>["onFinishFailed"] = (errorInfo) => {
+  const onFinishFailed: FormProps<TypeProduct>["onFinishFailed"] = (
+    errorInfo
+  ) => {
     console.log("Failed:", errorInfo);
   };
 
@@ -142,7 +120,7 @@ const ProductEditPage = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item<DataType>
+        <Form.Item<TypeProduct>
           label="Product Name"
           name="productName"
           rules={[
@@ -152,7 +130,7 @@ const ProductEditPage = () => {
         >
           <Input />
         </Form.Item>
-        <Form.Item<DataType>
+        <Form.Item<TypeProduct>
           label="URL SEO"
           name="slug"
           rules={[
@@ -162,7 +140,7 @@ const ProductEditPage = () => {
         >
           <Input />
         </Form.Item>
-        <Form.Item<DataType>
+        <Form.Item<TypeProduct>
           label="Category"
           name="category"
           rules={[
@@ -184,7 +162,7 @@ const ProductEditPage = () => {
           />
         </Form.Item>
 
-        <Form.Item<DataType>
+        <Form.Item<TypeProduct>
           label="Brand"
           name="brandId"
           rules={[{ required: true, message: "Please input product Brand!" }]}
@@ -204,7 +182,7 @@ const ProductEditPage = () => {
           />
         </Form.Item>
 
-        <Form.Item<DataType>
+        <Form.Item<TypeProduct>
           hasFeedback
           label="Price"
           name="price"
@@ -220,7 +198,7 @@ const ProductEditPage = () => {
           <InputNumber min={0} defaultValue={0} />
         </Form.Item>
 
-        <Form.Item<DataType>
+        <Form.Item<TypeProduct>
           hasFeedback
           label="Discount"
           name="discount"
@@ -236,7 +214,7 @@ const ProductEditPage = () => {
           <InputNumber min={0} defaultValue={0} />
         </Form.Item>
 
-        <Form.Item<DataType>
+        <Form.Item<TypeProduct>
           hasFeedback
           label="Stock"
           name="stock"
@@ -252,7 +230,7 @@ const ProductEditPage = () => {
           <InputNumber min={0} defaultValue={0} />
         </Form.Item>
 
-        <Form.Item<DataType>
+        <Form.Item<TypeProduct>
           label="Description"
           name="description"
           rules={[{ max: 500, message: "Tối đa 500 kí tự" }]}
@@ -260,7 +238,7 @@ const ProductEditPage = () => {
           <Input.TextArea />
         </Form.Item>
 
-        <Form.Item<DataType>
+        <Form.Item<TypeProduct>
           hasFeedback
           label="Sort"
           name="sort"
@@ -288,7 +266,7 @@ const ProductEditPage = () => {
           </Form.Item>
         </Form.Item>
 
-        <Form.Item<DataType> label="Thumbnail" name="thumbnail">
+        <Form.Item<TypeProduct> label="Thumbnail" name="thumbnail">
           <Input />
         </Form.Item>
         <Row style={{ margin: "20px 0" }}>

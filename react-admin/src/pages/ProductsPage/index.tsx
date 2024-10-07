@@ -1,24 +1,17 @@
 import { axiosClient } from "../../librarys/AxiosClient";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button, Pagination, Popconfirm, Space, Table, message } from "antd";
-import type { TableProps } from "antd";
+import type { GetProps, TableProps } from "antd";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { DeleteOutlined } from "@ant-design/icons";
-
+import { TypeProduct } from "../../components/data/type";
 import moment from "moment";
 import { useEffect, useState } from "react";
-
+import FilterProduct from "./FilterProduct";
+type SearchProps = GetProps<typeof Input.Search>;
+import { Input } from "antd";
+const { Search } = Input;
 const ProductsPage = () => {
-  interface DataType {
-    _id: string;
-    productName: string;
-    category: { _id: string; categoryName: string };
-    price: number;
-    sort: number;
-    isActive: boolean;
-    createdAt: string;
-    time: string;
-  }
   const fmDate = (date: any, format = "DD/MM/YYYY HH:mm:ss") =>
     moment(date).format(format);
   const [messageApi, contextHoder] = message.useMessage();
@@ -26,25 +19,41 @@ const ProductsPage = () => {
   const [param] = useSearchParams();
   const page = param.get("page");
   const limit = param.get("limit");
+<<<<<<< Updated upstream
   //Phân trang
+=======
+  const [sortType, setSortType] = useState("DESC");
+  const [sortBy, setSortBy] = useState("createdAt");
+  const [discount, setDiscount] = useState<number>(0);
+>>>>>>> Stashed changes
   const [int_page, setInt_page] = useState(page ? parseInt(page) : 1);
   const [int_limit, setInt_limit] = useState(limit ? parseInt(limit) : 10);
-  // const int_page = page ? parseInt(page) : 1;
-  // const int_limit = limit ? parseInt(limit) : 10;
+  const [keyword, setKeyword] = useState<string>("");
+  const queryClient = useQueryClient();
+
   const getProducts = async (page = 1, limit = 10) => {
-    return axiosClient.get(`/v1/products?page=${page}&limit=${limit}`);
+    return axiosClient.get(
+      `/v1/products?page=${page}&limit=${limit}&keyword=${keyword}&sortBy=${sortBy}&sortType=${sortType}&discount_min=${discount}&discount_max=99`
+    );
   };
   //Lấy tất cả các sản phẩm ra
   const queryProducts = useQuery({
-    queryKey: ["products", int_page, int_limit],
+    queryKey: [
+      "products",
+      int_page,
+      int_limit,
+      sortBy,
+      sortType,
+      discount,
+      keyword,
+    ],
     queryFn: () => getProducts(int_page, int_limit),
   });
   useEffect(() => {
     getProducts(int_page, int_limit);
   }, [int_page, int_limit]);
-
   //xoa
-  const queryClient = useQueryClient();
+
   //=========================== FETCH DELETE =================================//
   // Mutations Để xóa danh mục
   const fetchDelete = async (id: string) => {
@@ -79,7 +88,7 @@ const ProductsPage = () => {
     }).format(amount);
   };
 
-  const columns: TableProps<DataType>["columns"] = [
+  const columns: TableProps<TypeProduct>["columns"] = [
     {
       title: "STT",
       key: "stt",
@@ -90,7 +99,17 @@ const ProductsPage = () => {
       dataIndex: "productName",
       key: "productName",
       render: (text) => (
-        <p style={{ width: "200px", color: "blue", cursor: "pointer" }}>
+        <p
+          style={{
+            width: "150px",
+            color: "blue",
+            cursor: "pointer",
+            overflow: "hidden",
+            display: "-webkit-box",
+            WebkitBoxOrient: "vertical",
+            WebkitLineClamp: "2",
+          }}
+        >
           {text}
         </p>
       ),
@@ -104,6 +123,14 @@ const ProductsPage = () => {
       },
     },
     {
+      title: "Thumb",
+      dataIndex: "thumbnail",
+      key: "thumbnail",
+      render: (text) => {
+        return <img height={60} src={`http://localhost:8080/${text}`} />;
+      },
+    },
+    {
       title: "Categories",
       dataIndex: "category",
       key: "category",
@@ -112,32 +139,19 @@ const ProductsPage = () => {
       },
     },
     {
-      title: "Sort",
-      dataIndex: "sort",
-      key: "sort",
-    },
-    {
       title: "Active",
       dataIndex: "isActive",
       key: "isActive",
-      render: (recod) => {
-        return <span>{recod.isActive ? "Enable" : "Disable"}</span>;
+      render: (text) => {
+        return <span>{text === true ? "Enable" : "Disable"}</span>;
       },
     },
     {
       title: "Date",
       dataIndex: "createdAt",
       key: "createdAt",
-      render: (recod) => {
-        return <span>{fmDate(recod.createdAt, "DD/MM/YYYY")}</span>;
-      },
-    },
-    {
-      title: "Time",
-      dataIndex: "time",
-      key: "time",
       render: (text) => {
-        return <span>{text}</span>;
+        return <span>{fmDate(text, "DD/MM/YYYY")}</span>;
       },
     },
     {
@@ -172,19 +186,74 @@ const ProductsPage = () => {
       ),
     },
   ];
+  if (discount > 0) {
+    columns.splice(4, 0, {
+      title: "Discount",
+      dataIndex: "discount",
+      key: "discount",
+      render: (text) => {
+        return (
+          <span
+            style={{
+              backgroundColor: "red",
+              padding: "2px 3px",
+              borderRadius: "5px",
+              color: "white",
+            }}
+          >
+            {text}%
+          </span>
+        );
+      },
+    });
+  }
+  const onSearch: SearchProps["onSearch"] = (value, _e, info) => {
+    console.log(info?.source, " ok", value);
+    setKeyword(value);
+  };
 
   return (
     <div>
       {contextHoder}
-      <h2>Product List</h2>
-      <Button
-        type="primary"
-        onClick={() => {
-          navigate("/products/add");
+      <h2 style={{ textAlign: "center" }}>Danh sách sản phẩm</h2>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: "10px",
         }}
       >
-        Create new Product
-      </Button>
+        <Button
+          type="primary"
+          onClick={() => {
+            navigate("/products/add");
+          }}
+        >
+          Thêm sản phẩm mới
+        </Button>
+        <div
+          style={{
+            display: "flex",
+            gap: "10px",
+          }}
+        >
+          <Search
+            placeholder="Nhập tên sản phẩm cần tìm"
+            onSearch={onSearch}
+            enterButton
+            onChange={(e) => {
+              setKeyword(e.target.value);
+            }}
+            style={{ width: "250px" }}
+          />
+          <FilterProduct
+            setDiscount={setDiscount}
+            setSortBy={setSortBy}
+            setSortType={setSortType}
+          />
+        </div>
+      </div>
+
       {queryProducts.isSuccess ? (
         <>
           <Table

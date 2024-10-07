@@ -8,7 +8,6 @@ import { useCartStore } from "../../hooks/useCartStore";
 interface DataType {
   _id?: string;
   productName: string;
-
   price: number;
   description?: string;
   discount: number;

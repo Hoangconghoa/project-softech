@@ -79,7 +79,7 @@ const LoginPage = () => {
         <Form.Item<FieldType>
           label="Password"
           name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
+          rules={[{ required: false, message: "Please input your password!" }]}
         >
           <Input.Password />
         </Form.Item>

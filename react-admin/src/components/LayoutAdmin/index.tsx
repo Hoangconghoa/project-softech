@@ -59,10 +59,11 @@ const App: React.FC = () => {
         }}
       >
         <div className="demo-logo-vertical" />
+
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["4"]}
+          defaultSelectedKeys={["DashBoard"]}
           items={items}
           onClick={({ key }) => {
             navigate("/" + key.split("-").join("/"));

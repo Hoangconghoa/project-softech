@@ -13,7 +13,7 @@ import {
   Popconfirm,
 } from "antd";
 import { DeleteOutlined, QuestionCircleOutlined } from "@ant-design/icons";
-import type { TableProps, PaginationProps } from "antd";
+import type { TableProps } from "antd";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosClient } from "../../librarys/AxiosClient";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -42,12 +42,12 @@ const CategoriesPage = () => {
   const [params] = useSearchParams();
   const page = params.get("page");
   const limit = params.get("limit");
-  const int_page = page ? parseInt(page) : 1;
-  const int_limit = limit ? parseInt(limit) : 10;
-  const onChangePagination: PaginationProps["onChange"] = (pageNumber) => {
-    console.log("Page: ", pageNumber);
-    navigate(`/categories?page=${pageNumber}`);
-  };
+  const [int_page, setInt_page] = useState(page ? parseInt(page) : 1);
+  const [int_limit, setInt_limit] = useState(limit ? parseInt(limit) : 10);
+  // const onChangePagination: PaginationProps["onChange"] = (pageNumber) => {
+  //   console.log("Page: ", pageNumber);
+  //   navigate(`/categories?page=${pageNumber}`);
+  // };
 
   //Lay danh sach danhmuc
   const getCategories = async (page = 1, limit = 10) => {
@@ -228,8 +228,8 @@ const CategoriesPage = () => {
       title: "Active",
       key: "isActive",
       dataIndex: "isActive",
-      render: (record) => {
-        return <span>{record.isActive ? "Enable" : "Disable"}</span>;
+      render: (text) => {
+        return <span>{text === true ? "Enable" : "Disable"}</span>;
       },
     },
     {
@@ -279,15 +279,16 @@ const CategoriesPage = () => {
   return (
     <div>
       {contextHolder}
-      <h1>Categories List</h1>
+      <h1 style={{ textAlign: "center" }}>Danh sách danh mục</h1>
       <Button
         type="primary"
+        style={{ marginBottom: "10px" }}
         onClick={() => {
           console.log("Them moi");
           showModalCreate();
         }}
       >
-        Create new Category
+        Tạo mới Danh mục
       </Button>
       {/* TABLE LIST */}
       <Table
@@ -301,7 +302,10 @@ const CategoriesPage = () => {
           total={queryCategory.data?.data.data.totalItems}
           showSizeChanger
           defaultPageSize={int_limit}
-          onChange={onChangePagination}
+          onChange={(page, limit) => {
+            setInt_page(page);
+            setInt_limit(limit);
+          }}
           showTotal={(total) => `Total ${total} items`}
         />
       </div>

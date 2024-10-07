@@ -20,13 +20,14 @@ const getAll = async (query: any) => {
   let findFilters: any = {};
   let objectFilters: any = {};
   //Tìm theo tên
-  if (query && query.keyword && query.keyword !== "") {
+  if (query?.keyword) {
     findFilters = { ...findFilters, keyword: query.keyword };
     objectFilters = {
       ...objectFilters,
-      productName: new RegExp(query.keyword, "i"),
+      productName: { $regex: query.keyword, $options: "i" },
     };
   }
+
   //TH chỉ lọc theo giá thấp nhất
   if (query && query.price_min && query.price_min !== "" && !query.price_max) {
     findFilters = { ...findFilters, price_min: query.price_min };
@@ -70,7 +71,36 @@ const getAll = async (query: any) => {
     findFilters = { ...findFilters, category: query.cat_id };
     objectFilters = { ...objectFilters, category: query.cat_id };
   }
-
+  //ishot
+  if (query && query.ishot === "true") {
+    findFilters = { ...findFilters, isHot: true };
+    objectFilters = { ...objectFilters, isHot: true };
+  }
+  if (query && query.ishome === "true") {
+    findFilters = { ...findFilters, isHome: true };
+    objectFilters = { ...objectFilters, isHome: true };
+  }
+  if (query && query.isbest === "true") {
+    findFilters = { ...findFilters, isBest: true };
+    objectFilters = { ...objectFilters, isBest: true };
+  }
+  if (
+    query &&
+    query.discount_min &&
+    query.discount_min !== "" &&
+    query.discount_max &&
+    query.discount_max !== ""
+  ) {
+    objectFilters = {
+      ...objectFilters,
+      discount: { $gte: query.discount_min, $lte: query.discount_max },
+    };
+    findFilters = {
+      ...findFilters,
+      discount_min: query.discount_min,
+      discount_max: query.discount_max,
+    };
+  }
   //Đếm tổng số record hiện có của collection Product
   const count = await Product.countDocuments(objectFilters);
 
@@ -168,12 +198,40 @@ const getAllClient = async (query: any) => {
     findFilters = { ...findFilters, category: query.cat_id };
     objectFilters = { ...objectFilters, category: query.cat_id };
   }
-
+  //ishot
+  if (query && query.ishot === "true") {
+    findFilters = { ...findFilters, isHot: true };
+    objectFilters = { ...objectFilters, isHot: true };
+  }
+  if (query && query.ishome === "true") {
+    findFilters = { ...findFilters, isHome: true };
+    objectFilters = { ...objectFilters, isHome: true };
+  }
+  if (query && query.isbest === "true") {
+    findFilters = { ...findFilters, isBest: true };
+    objectFilters = { ...objectFilters, isBest: true };
+  }
+  if (
+    query &&
+    query.discount_min &&
+    query.discount_min !== "" &&
+    query.discount_max &&
+    query.discount_max !== ""
+  ) {
+    objectFilters = {
+      ...objectFilters,
+      discount: { $gte: query.discount_min, $lte: query.discount_max },
+    };
+    findFilters = {
+      ...findFilters,
+      discount_min: query.discount_min,
+      discount_max: query.discount_max,
+    };
+  }
   //Chỉ lấy những sp isActive=true, isDelete =false
   objectFilters = {
     ...objectFilters,
     isActive: true,
-    isHot: true,
     isDelete: false,
   };
 
@@ -224,8 +282,6 @@ const getProductBySlug = async (slug: string) => {
   const result = await Product.findOne({
     slug: slug,
   }).select("-__v");
-  // .populate('category', '-__v')
-  // .populate('brand', '-__v')
 
   if (!result) {
     throw createError(404, "Product not found");

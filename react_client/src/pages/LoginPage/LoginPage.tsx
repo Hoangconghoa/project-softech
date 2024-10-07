@@ -35,7 +35,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
+    <div className="flex justify-center items-center">
       {contextHolder}
 
       <Form
@@ -46,9 +46,10 @@ const LoginPage = () => {
         style={{
           maxWidth: 500,
           minWidth: 400,
-          position: "absolute",
-          top: "15%",
-          right: "50px",
+          marginTop: 50,
+          // position: "absolute",
+          // top: "15%",
+          // right: "50px",
           border: "1px solid black",
           padding: "10px 10px",
         }}
