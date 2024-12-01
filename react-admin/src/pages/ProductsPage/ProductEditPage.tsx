@@ -90,12 +90,18 @@ const ProductEditPage = () => {
   const onFinish: FormProps<TypeProduct>["onFinish"] = (values) => {
     console.log("Success:", values);
     mutationUpdate.mutate(values);
+    messageApi.open({
+      type: "success",
+      content: "Update success!",
+    });
+    navigate("/products");
   };
 
-  const onFinishFailed: FormProps<TypeProduct>["onFinishFailed"] = (
-    errorInfo
-  ) => {
-    console.log("Failed:", errorInfo);
+  const onFinishFailed: FormProps<TypeProduct>["onFinishFailed"] = () => {
+    messageApi.open({
+      type: "success",
+      content: "error",
+    });
   };
 
   return (

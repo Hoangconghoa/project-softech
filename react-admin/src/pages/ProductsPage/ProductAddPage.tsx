@@ -55,10 +55,7 @@ const ProductAddPage = () => {
         type: "success",
         content: "Create success !",
       });
-<<<<<<< Updated upstream
       // Làm mới lại danh sách danh mục dựa trên key đã định nghĩa
-=======
->>>>>>> Stashed changes
       queryClient.invalidateQueries({
         queryKey: ["products"],
       });
@@ -81,18 +78,25 @@ const ProductAddPage = () => {
     console.log("Failed:", errorInfo);
   };
 
-  const handleProductNameChange = (e: any) => {
-    const value = e.target.value;
-    const slugValue = value
-      .toLowerCase()
-      .replace(/ /g, "-")
-      .replace(/[^\w-]+/g, "");
-
-    updateFormEdit.setFieldsValue({ slug: slugValue });
-  };
-
   const FormatNumber = (value: any) => {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  };
+
+  const toSlug = (str: string) => {
+    return str
+      .toLowerCase()
+      .normalize("NFD") // Chuẩn hóa chuỗi để tách dấu
+      .replace(/[\u0300-\u036f]/g, "") // Xóa các dấu
+      .replace(/[^a-z0-9\s-]/g, "") // Xóa các ký tự không hợp lệ
+      .trim() // Xóa khoảng trắng đầu cuối
+      .replace(/\s+/g, "-"); // Thay khoảng trắng bằng dấu gạch ngang
+  };
+  const handleProductNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    updateFormEdit.setFieldsValue({
+      productName: value,
+      slug: toSlug(value),
+    });
   };
 
   return (

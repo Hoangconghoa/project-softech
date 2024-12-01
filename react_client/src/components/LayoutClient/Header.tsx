@@ -12,6 +12,7 @@ import USD from "../../../public/images/usd.svg";
 import EURO from "../../../public/images/euro.png";
 import GBP from "../../../public/images/logogdb.webp";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
+import { RiOrderPlayLine } from "react-icons/ri";
 import { GoChevronDown } from "react-icons/go";
 
 import globalConfigs from "../../constants/config";
@@ -27,6 +28,7 @@ const Header = () => {
   const { user, logout } = useAuth();
   const { itemCount } = useCartStore();
   const [dataCategory, setDataCategory] = useState<DataType[]>();
+  const [countOrder, setCountOrder] = useState(0);
   const menuLanguage = [
     { label: "Germany", path: "/germany", img: Gernamy },
     { label: "France", path: "/france", img: France },
@@ -46,9 +48,15 @@ const Header = () => {
           globalConfigs.urlAPI + "/v1/categories"
         );
         setDataCategory(response.data.data.categories);
-        console.log("Data", response.data.data);
+      };
+      const featchOrder = async () => {
+        const response = await axios.get(
+          globalConfigs.urlAPI + `/v1/orders?customer=` + user?.phone
+        );
+        setCountOrder(response.data.data.filteredCount);
       };
       featchData();
+      featchOrder();
     } catch (error) {
       console.log(error);
     }
@@ -119,6 +127,18 @@ const Header = () => {
               </button>
             </Link>
           </div>
+
+          <div>
+            <Link to={"/order"} className="cart mt-3">
+              <button className="hover:text-blue-600">
+                <RiOrderPlayLine className="text-5xl " />
+                <span className="text-white text-xs px-[5px]  absolute top-[70px]  rounded-full bg-blue-600 ">
+                  {countOrder}
+                </span>
+              </button>
+            </Link>
+          </div>
+
           <div className="login flex justify-center items-center mt-2">
             <div className=" font-mono">
               {user ? (

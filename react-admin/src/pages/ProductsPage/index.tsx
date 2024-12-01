@@ -19,13 +19,10 @@ const ProductsPage = () => {
   const [param] = useSearchParams();
   const page = param.get("page");
   const limit = param.get("limit");
-<<<<<<< Updated upstream
   //Phân trang
-=======
   const [sortType, setSortType] = useState("DESC");
   const [sortBy, setSortBy] = useState("createdAt");
   const [discount, setDiscount] = useState<number>(0);
->>>>>>> Stashed changes
   const [int_page, setInt_page] = useState(page ? parseInt(page) : 1);
   const [int_limit, setInt_limit] = useState(limit ? parseInt(limit) : 10);
   const [keyword, setKeyword] = useState<string>("");

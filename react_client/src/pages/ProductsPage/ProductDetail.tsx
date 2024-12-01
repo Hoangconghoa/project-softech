@@ -4,6 +4,7 @@ import globalConfigs from "../../constants/config";
 import axios from "axios";
 import { message } from "antd";
 import { useCartStore } from "../../hooks/useCartStore";
+import config from "../../constants/config";
 
 interface DataType {
   _id?: string;
@@ -15,6 +16,8 @@ interface DataType {
   thumbnail: string;
   slug: string;
 }
+
+const imageUrl = config.urlIMAGE;
 const ProductDetail = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [productDetail, setProductDetail] = useState<DataType>({
@@ -74,7 +77,7 @@ const ProductDetail = () => {
         <div className="flex">
           <div className="img w-[50%]">
             <img
-              src={productDetail?.thumbnail}
+              src={`${imageUrl}${productDetail?.thumbnail}`}
               alt={productDetail?.productName}
               width={400}
               height={500}

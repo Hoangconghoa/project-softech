@@ -16,7 +16,7 @@ import { DeleteOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import type { TableProps } from "antd";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosClient } from "../../librarys/AxiosClient";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 type NoticeType = "success" | "error";
 interface DataType {
   _id: string;
@@ -37,7 +37,6 @@ const CategoriesPage = () => {
     });
   };
 
-  const navigate = useNavigate();
   //=========================== PHÂN TRANG =================================//
   const [params] = useSearchParams();
   const page = params.get("page");
@@ -262,15 +261,6 @@ const CategoriesPage = () => {
           >
             <Button danger type="dashed" icon={<DeleteOutlined />} />
           </Popconfirm>
-          <Button
-            type="link"
-            onClick={() => {
-              console.log("Edit", record);
-              navigate(`/category/add/${record._id}`);
-            }}
-          >
-            Edit
-          </Button>
         </Space>
       ),
     },

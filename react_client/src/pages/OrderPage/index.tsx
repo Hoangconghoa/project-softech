@@ -3,14 +3,15 @@ import { useEffect, useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
 import { axiosClient } from "../../librarys/axiosClient";
 import useAuth from "../../hooks/useCustomers";
-import { Result } from "antd";
-import { Link } from "react-router-dom";
+import { Button, Result } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 const OrderPage = () => {
   const [status, setStatus] = useState<string>("pending");
   const [dataList, setDataList] = useState<any[]>([]);
   const { user } = useAuth();
+  const navigate = useNavigate();
   const getOrders = async () => {
-    return axiosClient.get(`/v1/orders?customer_id=${user?._id}`);
+    return axiosClient.get(`/v1/orders?customer=${user?.phone}`);
   };
   //lấy danh sách
   const queryOders = useQuery({
@@ -29,6 +30,20 @@ const OrderPage = () => {
 
   const datalength = dataList.length;
   console.log("order", datalength);
+  if (!user) {
+    return (
+      <Result
+        status="403"
+        title="Bạn cần đăng nhập"
+        subTitle="Vui lòng đăng nhập để xem danh sách đơn hàng."
+        extra={
+          <Button type="primary" onClick={() => navigate("/")}>
+            Quay lại trang chủ
+          </Button>
+        }
+      />
+    );
+  }
   return (
     <div className="p-5">
       <div className="flex items-center gap-10 mb-5">

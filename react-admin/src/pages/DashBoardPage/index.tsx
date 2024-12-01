@@ -75,7 +75,11 @@ const DashBoardPage = () => {
       <Table
         pagination={false}
         columns={columns}
-        dataSource={queryCategory.data?.data.data}
+        dataSource={
+          Array.isArray(queryCategory.data?.data.data)
+            ? queryCategory.data?.data.data
+            : []
+        }
       />
     </div>
   );

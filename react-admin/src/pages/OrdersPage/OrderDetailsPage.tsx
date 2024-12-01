@@ -10,6 +10,7 @@ import { axiosClient } from "../../librarys/AxiosClient";
 import moment from "moment";
 import CardInfomation from "../../components/CardInfomation";
 import { Form, Table, TableProps, message, Select, Button } from "antd";
+import config from "../../constants/config";
 import { AnyObject } from "antd/es/_util/type";
 
 interface DataType {
@@ -36,6 +37,8 @@ const EnumOrderStatus = {
   refund: "refund",
   finished: "finished",
 };
+
+const urlImage = config.urlImage;
 
 const OrderDetailsPage = () => {
   const params = useParams();
@@ -79,8 +82,6 @@ const OrderDetailsPage = () => {
     queryKey: ["Customers-detail", id],
     queryFn: getCustomer,
   });
-
-  console.log("id=", customerId);
   const fmDate = (date: any, format = "DD/MM/YYYY HH:mm:ss") =>
     moment(date).format(format);
   const columns: TableProps<DataType>["columns"] = [
@@ -94,7 +95,14 @@ const OrderDetailsPage = () => {
       dataIndex: "thumb",
       key: "thumb",
       render: (text) => {
-        return <img width={40} height={40} src={text} alt="productImg" />;
+        return (
+          <img
+            width={40}
+            height={40}
+            src={`${urlImage}${text}`}
+            alt="productImg"
+          />
+        );
       },
     },
     {
@@ -165,11 +173,7 @@ const OrderDetailsPage = () => {
         <CardInfomation
           icon={<ContactsTwoTone style={{ fontSize: "30px" }} />}
           name="Name"
-          value={
-            queryCustomer.data?.data.data.firstName +
-            " " +
-            queryCustomer.data?.data.data.lastName
-          }
+          value={queryOrders.data?.data.data.customerName}
           color="#F8D7DA"
         />
         <CardInfomation
@@ -181,7 +185,7 @@ const OrderDetailsPage = () => {
         <CardInfomation
           icon={<PhoneTwoTone style={{ fontSize: "30px" }} />}
           name="Phone"
-          value={queryCustomer.data?.data.data.phone}
+          value={queryOrders.data?.data.data.customerMobile}
           color="#CFF4FC"
         />
       </div>

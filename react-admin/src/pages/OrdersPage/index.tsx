@@ -44,16 +44,11 @@ const OrdersPage = () => {
       // });
       // Làm tươi lại danh sách danh mục dựa trên key đã định nghĩa
       queryClient.invalidateQueries({
-        queryKey: ["products", int_page, int_limit],
+        queryKey: ["orders", int_page, int_limit],
       });
     },
     onError: (err) => {
       console.log("Xóa có lỗi !", err);
-      //msgError('Xóa Product không thành công !');
-      // messageApi.open({
-      //   type: "error",
-      //   content: "Delete fail !",
-      // });
     },
   });
   const tinhtong = () => {

@@ -1,8 +1,11 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCartStore } from "../../hooks/useCartStore";
 import { GoChevronDown } from "react-icons/go";
 import { FaDeleteLeft } from "react-icons/fa6";
 import numeral from "numeral";
+import config from "../../constants/config";
+
+const imageUrl = config.urlIMAGE;
 const CartPage = () => {
   const navigate = useNavigate();
   const { items, increaseQuantity, decreaseQuantity, total, removeItem } =
@@ -23,13 +26,8 @@ const CartPage = () => {
             }}
             className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4"
           >
-            BackToShop
+            Quay lại trang chủ
           </button>
-          <Link to="/order">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4">
-              Placed Order
-            </button>
-          </Link>
         </div>
         <div className="container mx-auto px-4">
           <div className="mb-[20px]">
@@ -59,7 +57,7 @@ const CartPage = () => {
                               <div className="flex items-center">
                                 <img
                                   className="h-16 w-16 mr-4"
-                                  src={product.thumb}
+                                  src={`${imageUrl}${product.thumb}`}
                                   alt="Product image"
                                 />
                                 <span className="font-semibold">
